@@ -1,4 +1,4 @@
-const pool = require("../config/db.js");
+const pool = require("../config/db.config.js");
 
 class userdal {
     async createUser(username, email, password, phone) {

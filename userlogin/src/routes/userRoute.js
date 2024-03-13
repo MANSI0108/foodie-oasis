@@ -1,10 +1,11 @@
 const express = require("express")
 const router = express.Router({mergeParams:true})
-const registerUser = require("../controller/services/register.service.js")
 const { handleLoginData, handleRegisterData }  = require("../middleware/validationData.js") ;
-const currentUser = require("../controller/services/currentUser.service.js");
 const verifyToken = require("../middleware/validateToken.js");
-const loginUser = require("../controller/services/login.service.js");
+const registerUser = require("../controller/register.controller.js");
+const loginUser = require("../controller/login.controller.js");
+const currentUser = require("../controller/currentUser.controller.js");
+
 
 
 router

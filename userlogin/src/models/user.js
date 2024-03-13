@@ -1,4 +1,4 @@
-const  pool = require("../config/db.js");
+const  pool = require("../config/db.config.js");
 
 
 
@@ -8,7 +8,7 @@ const createUserTable = async () => {
         CREATE TABLE IF NOT EXISTS userdata (
           id SERIAL PRIMARY KEY,
           username  VARCHAR(255),
-          email  VARCHAR(255),
+          email  VARCHAR(255), 
           password  VARCHAR(255),
           phone bigint 
 
