@@ -1,17 +1,8 @@
-const userDal = require("../dal/user.dal.js");
+const userDal = require("../dal/user.dal");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 
-const registerService = async (username, password, email, phone ,role) => {
-
-    const pass = await bcrypt.hash(password, 10);
-    const dal_result = await userDal.createUser(username, email, pass, phone ,role);
-    console.log(dal_result);
-    return dal_result;
-
-}
-
-const loginService = async (username, password, role) => {
+const loginOwnerService = async (username, password, role) => {
 
     const { rows, rowCount } = await userDal.findAdminByusername(username, '');
 
@@ -27,7 +18,7 @@ const loginService = async (username, password, role) => {
     }
     delete user.password;
 
-    if(role != "user"){
+    if(role != "owner"){
         const err = new Error("Unauthorized User")
         throw err
     }
@@ -38,5 +29,4 @@ const loginService = async (username, password, role) => {
 
 }
 
-
-module.exports = { registerService, loginService };
+module.exports = {loginOwnerService}

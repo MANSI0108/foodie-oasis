@@ -40,9 +40,9 @@ const handleRegisterData = async (req, res, next) => {
 
 
 const handleLoginData = async (req, res, next) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
-        const err = new Error("Username or Password missing")
+    const { username, password, role } = req.body;
+    if (!username || !password || !role) {
+        const err = new Error("Username or Password or role missing")
         next(err)
 
     }
