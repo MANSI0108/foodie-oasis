@@ -3,10 +3,10 @@ const userDal = require("../dal/user.dal.js")
 
 
 const handleRegisterData = async (req, res, next) => {
-    const { username, password, email, phone } = req.body;
+    const { username, password, email, phone, role } = req.body;
 
-    if (!username || !password || !email || !phone) {
-        next ( new Error("Some fields are missing"));
+    if (!username || !password || !email || !phone || !role) {
+        next(new Error("Some fields are missing"));
     }
 
     if (password.length < 8) {
@@ -14,18 +14,22 @@ const handleRegisterData = async (req, res, next) => {
     }
 
     if (email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) === null) {
-        next (new Error("Email is not valid"));
+        next(new Error("Email is not valid"));
     }
 
     if ((phone.length) != 10) {
-        next(new Error("Phone number is invalid")) ;
+        next(new Error("Phone number is invalid"));
+    }
+
+    if (role != "user" || role != "owner") {
+        next(new Error("Role is not valid"));
     }
 
     try {
         const result = await userDal.findAdminByusername(username, email);
 
         if (result.rows.length > 0) {
-            next (new Error("User is already exist"));
+            next(new Error("User is already exist"));
         }
 
         next();
@@ -39,11 +43,11 @@ const handleLoginData = async (req, res, next) => {
     const { username, password } = req.body;
     if (!username || !password) {
         const err = new Error("Username or Password missing")
-         next(err)
+        next(err)
 
     }
-   next()
+    next()
 
 }
 
-module.exports = {handleLoginData,handleRegisterData}
+module.exports = { handleLoginData, handleRegisterData }

@@ -23,23 +23,27 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: userdata; Type: TABLE; Schema: public; Owner: -
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.userdata (
+CREATE TABLE public.users (
     id integer NOT NULL,
-    username character varying(255),
-    email character varying(255),
-    password character varying(255),
-    phone bigint
+    username character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    phone bigint NOT NULL,
+    role character varying(20) NOT NULL,
+    createdat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updatedat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT users_role_check CHECK (((role)::text = ANY ((ARRAY['user'::character varying, 'owner'::character varying])::text[])))
 );
 
 
 --
--- Name: userdata_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.userdata_id_seq
+CREATE SEQUENCE public.users_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -49,17 +53,17 @@ CREATE SEQUENCE public.userdata_id_seq
 
 
 --
--- Name: userdata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.userdata_id_seq OWNED BY public.userdata.id;
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: userdata id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.userdata ALTER COLUMN id SET DEFAULT nextval('public.userdata_id_seq'::regclass);
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
@@ -71,11 +75,19 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: userdata userdata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.userdata
-    ADD CONSTRAINT userdata_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
 --
@@ -88,4 +100,4 @@ ALTER TABLE ONLY public.userdata
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
-    ('20240311101412');
+    ('20240314101247');

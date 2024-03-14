@@ -7,8 +7,8 @@ const registerUser = async (req, res, next) => {
 
   try {
 
-    const { username, password, email, phone } = req.body
-    const user = await registerService(username, password, email, phone)
+    const { username, password, email, phone, role} = req.body
+    const user = await registerService(username, password, email, phone, role)
     return res.status(201).send({ message: 'New User created', user: user.rows[0] });
 
   } catch (err) {
