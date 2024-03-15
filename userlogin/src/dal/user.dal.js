@@ -18,6 +18,30 @@ class userdal {
         
    
     }
+
+    async findUserByEmail(email){
+
+        const sql = 'SELECT * FROM users WHERE email = $1 '
+        const values = [ email]
+        const result = await pool.query(sql, values);
+        return result
+    }
+
+    async findUserisverified(email){
+
+        const sql = 'SELECT isveryfied FROM users WHERE email = $1 '
+        const values = [ email]
+        const result = await pool.query(sql, values);
+        return result
+    }
+
+    async changeVerifiedStatus(user_id) {
+        const sql = 'UPDATE users SET isveryfied = true WHERE id = $1;'
+        const values = [user_id]
+        const result = await pool.query(sql, values);
+        return result
+    }
+
 }
 
 module.exports= new userdal();

@@ -5,7 +5,8 @@ const verifyToken = require("../middleware/validateToken.js");
 const registerUser = require("../controller/register.controller.js");
 const loginUser = require("../controller/login.controller.js");
 const currentUser = require("../controller/currentUser.controller.js");
-const loginOwner = require("../controller/loginOwner.js");
+const verifyEmail = require("../controller/verifyEmail.controller.js");
+
 
 
 
@@ -22,7 +23,11 @@ router
     .get(verifyToken, currentUser)
 
 router
-    .route('/login-admin')
-    .get(handleLoginData, loginOwner)
+     .route('/verify-email')
+     .post(verifyEmail)
+    
+
+
+
 
 module.exports = router

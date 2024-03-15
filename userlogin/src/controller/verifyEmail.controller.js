@@ -1,0 +1,59 @@
+const userDal = require("../dal/user.dal.js");
+const emailverifyTokenDal = require("../dal/emailtoken.dal.js");
+const bcrypt = require("bcrypt");
+const { generateMailTransporter } = require("../utils/mail.js");
+const jwt = require("jsonwebtoken");
+
+const verifyEmail = async (req, res, next) => {
+  const { email, OTP } = req.body;
+
+  const user = await userDal.findUserByEmail(email)
+
+  if (!user.rows[0]) {
+    return next(new Error("User Not Found"))
+  };
+
+  if (user.rows[0].isveryfied) return next(new Error("User is already verified"))
+
+  const token = await emailverifyTokenDal.findToken(user.rows[0].id)
+
+  if (!token.rows[0]) return next(new Error("Token Not Found"))
+  if (token.rows[0]) { }
+  const ismatched = await bcrypt.compare(OTP, token.rows[0].token);
+  if (!ismatched) return next(new Error("Your OTP is Not Valid!"))
+
+  const updateStatus = await userDal.changeVerifiedStatus(user.rows[0].id)
+
+  if (updateStatus) {
+
+    await emailverifyTokenDal.deleteToken(user.rows[0].id);
+
+  }
+
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    from: "verification@reviewapp.com",
+    to: user.rows[0].email,
+    subject: "Welcome Email",
+    html: "<h1>Welcome to our app and thanks for choosing us.</h1>",
+  });
+
+  const jwtToken = jwt.sign({ user_id: user.rows[0].id }, process.env.JWT_SECRET);
+
+  const newuser = await userDal.findUserByEmail(email)
+
+  res.json({
+    user: {
+      id: newuser.rows[0].id,
+      name: newuser.rows[0].username,
+      email: newuser.rows[0].email,
+      token: jwtToken,
+      isVerified: newuser.rows[0].isveryfied,
+      role: newuser.rows[0].role,
+    },
+    message: "Your email is verified.",
+  });
+
+}
+module.exports = verifyEmail

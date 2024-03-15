@@ -14,6 +14,57 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: emailverificationtoken; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.emailverificationtoken (
+    id integer NOT NULL,
+    token character varying(255),
+    user_id integer NOT NULL
+);
+
+
+--
+-- Name: emailverificationtoken_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.emailverificationtoken_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: emailverificationtoken_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.emailverificationtoken_id_seq OWNED BY public.emailverificationtoken.id;
+
+
+--
+-- Name: emailverificationtoken_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.emailverificationtoken_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: emailverificationtoken_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.emailverificationtoken_user_id_seq OWNED BY public.emailverificationtoken.user_id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -33,9 +84,10 @@ CREATE TABLE public.users (
     password character varying(255) NOT NULL,
     phone bigint NOT NULL,
     role character varying(20) NOT NULL,
+    isveryfied boolean DEFAULT false NOT NULL,
     createdat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updatedat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT users_role_check CHECK (((role)::text = ANY ((ARRAY['user'::character varying, 'owner'::character varying])::text[])))
+    CONSTRAINT users_role_check CHECK (((role)::text = ANY ((ARRAY['customer'::character varying, 'owner'::character varying])::text[])))
 );
 
 
@@ -60,10 +112,32 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: emailverificationtoken id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.emailverificationtoken ALTER COLUMN id SET DEFAULT nextval('public.emailverificationtoken_id_seq'::regclass);
+
+
+--
+-- Name: emailverificationtoken user_id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.emailverificationtoken ALTER COLUMN user_id SET DEFAULT nextval('public.emailverificationtoken_user_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: emailverificationtoken emailverificationtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.emailverificationtoken
+    ADD CONSTRAINT emailverificationtoken_pkey PRIMARY KEY (id);
 
 
 --
@@ -91,6 +165,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: emailverificationtoken fk_user; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.emailverificationtoken
+    ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -100,4 +182,5 @@ ALTER TABLE ONLY public.users
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
-    ('20240314101247');
+    ('20240315045151'),
+    ('20240315051047');

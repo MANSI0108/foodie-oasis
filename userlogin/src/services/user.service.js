@@ -6,8 +6,8 @@ const registerService = async (username, password, email, phone ,role) => {
 
     const pass = await bcrypt.hash(password, 10);
     const dal_result = await userDal.createUser(username, email, pass, phone ,role);
-    console.log(dal_result);
     return dal_result;
+    
 
 }
 
@@ -27,7 +27,7 @@ const loginService = async (username, password, role) => {
     }
     delete user.password;
 
-    if(role != "user"){
+    if(role != user.role){
         const err = new Error("Unauthorized User")
         throw err
     }

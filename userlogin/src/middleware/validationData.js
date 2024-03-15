@@ -21,9 +21,6 @@ const handleRegisterData = async (req, res, next) => {
         next(new Error("Phone number is invalid"));
     }
 
-    if (role != "user" || role != "owner") {
-        next(new Error("Role is not valid"));
-    }
 
     try {
         const result = await userDal.findAdminByusername(username, email);
