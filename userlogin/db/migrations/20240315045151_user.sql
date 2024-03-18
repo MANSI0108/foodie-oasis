@@ -14,3 +14,4 @@ CREATE TABLE users(
 
 -- migrate:down
 
+drop table if not EXISTS users;

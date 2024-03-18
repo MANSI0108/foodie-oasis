@@ -11,3 +11,4 @@ CREATE TABLE emailverificationToken(
 
 -- migrate:down
 
+drop table if NOT EXISTS emailverificationToken;

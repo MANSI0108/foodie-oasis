@@ -42,4 +42,6 @@ const handleRegisterData = async (req, res, next) => {
     }
 };
 
-module.exports = handleRegisterData
+
+
+module.exports= {handleRegisterData}
