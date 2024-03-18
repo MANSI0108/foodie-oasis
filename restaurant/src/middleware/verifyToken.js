@@ -18,10 +18,9 @@ const verifyToken = async (req, res, next) => {
                     const err = new Error("Token is Invalid")
                     return next(err)
                 }
-               
-                console.log(result);
-                req.user = result
 
+                req.user = result
+                // console.log(result);
                 next();
             });
             // console.log(token);

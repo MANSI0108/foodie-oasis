@@ -6,9 +6,9 @@ const errorHandler = require("./src/middleware/asyncHandler.js");
 
 
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 
-app.use ('/foodApp',authRoute)
+app.use('/foodApp', authRoute)
 
 app.use(errorHandler)
 
