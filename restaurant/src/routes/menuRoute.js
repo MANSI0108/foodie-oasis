@@ -1,26 +1,25 @@
 const express = require("express");
-const verifyToken = require("../middleware/verifyToken");
 const { registerMenu, getMenu, updateMenu, deleteMenu } = require("../controller/menu.controller");
-const {isOwner} = require("../../helper");
-const { handleMenuData, menuExist } = require("../middleware/menu.validation");
+const { isOwner, getRequestHandler } = require("../../helper");
+const { handleMenuData } = require("../middleware/menu.validation");
 const router = express.Router({ mergeParams: true })
 
 
 router
     .route('/addMenu')
-    .post(verifyToken, isOwner, handleMenuData, registerMenu);
+    .post(isOwner, handleMenuData, getRequestHandler(registerMenu));
 
 router
     .route('/getMenu')
-    .get(verifyToken, isOwner, getMenu )    
+    .get(getRequestHandler(getMenu))
 
 router
     .route('/updateMenu/:id')
-    .patch(verifyToken, isOwner, menuExist, handleMenuData, updateMenu)
+    .patch(isOwner, handleMenuData, getRequestHandler(updateMenu))
 
 router
     .route('/deleteMenu/:id')
-    .delete(verifyToken, isOwner, menuExist, deleteMenu)    
+    .delete(isOwner, getRequestHandler(deleteMenu))
 
-    
+
 module.exports = router

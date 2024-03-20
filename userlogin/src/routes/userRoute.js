@@ -6,26 +6,27 @@ const registerUser = require("../controller/register.controller.js");
 const loginUser = require("../controller/login.controller.js");
 const currentUser = require("../controller/currentUser.controller.js");
 const verifyEmail = require("../controller/verifyEmail.controller.js");
+const { getRequestHandler } = require("../../helper.js");
 
 
 
 
 router
     .route('/register')
-    .post(handleRegisterData, registerUser);
+    .post(handleRegisterData, getRequestHandler(registerUser));
 
 router
     .route('/login-User')
-    .post(handleLoginData, loginUser)
+    .post(handleLoginData, getRequestHandler(loginUser))
 
 router
     .route('/currentuser')
-    .get(verifyToken, currentUser)
+    .get(verifyToken, getRequestHandler(currentUser))
 
 router
-     .route('/verify-email')
-     .post(verifyEmail)
-    
+    .route('/verify-email')
+    .post(verifyEmail)
+
 
 
 

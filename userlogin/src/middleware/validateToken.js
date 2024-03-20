@@ -1,7 +1,7 @@
 
 const jwt = require('jsonwebtoken')
-
 const secretKey = process.env.JWT_SECRET;
+
 const verifyToken = async (req, res, next) => {
     const bearerHeader = await req.headers["authorization"];
     if (!bearerHeader) {
@@ -18,8 +18,7 @@ const verifyToken = async (req, res, next) => {
                     const err = new Error("Token is Invalid")
                     return next(err)
                 }
-               
-                console.log(result);
+
                 req.user = result
 
                 next();

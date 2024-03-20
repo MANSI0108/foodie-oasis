@@ -23,7 +23,7 @@ const updateService = async (id, name, email, profile, address, lat, long, updat
 }
 
 const deleteService = async (id, ownerid) => {
-    
+
     const restaurant = await restaurantDal.findRestaurantById(id);
 
     if ((restaurant.rows[0] != null) && (ownerid === restaurant.rows[0].created_by)) {

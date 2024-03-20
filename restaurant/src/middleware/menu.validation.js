@@ -22,7 +22,7 @@ const handleMenuData = async (req, res, next) => {
             err.statusCode = 401;
             return next(err)
         }
-      next()
+        next()
     }
     catch (err) {
         next(err)
@@ -30,16 +30,4 @@ const handleMenuData = async (req, res, next) => {
 
 };
 
-const menuExist = async(req,res,next)=>{
-
-    const id = req.params.id;
-    const menu = await menuDal.getMenuID(id);
-
-    if(menu.rows.length == 0){
-        const err = new Error("Menu Not Exist")
-        err.statusCode = 401;
-        return next(err)
-    }
-    next()
-}
-module.exports = { handleMenuData, menuExist }
+module.exports = { handleMenuData }

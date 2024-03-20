@@ -28,25 +28,25 @@ class restaurantDal {
         return result
     }
 
-    async getRestaurant(){
+    async getRestaurant() {
 
         const sql = 'SELECT * FROM restaurant'
-        const result  = await pool.query(sql);
+        const result = await pool.query(sql);
         return result
     }
 
-    async updateRestaurant(id, name, email, profile, address, lat, long, updated_by){
+    async updateRestaurant(id, name, email, profile, address, lat, long, updated_by) {
         const sql = `UPDATE restaurant SET name = $1, email = $2, profile = $3, address= $4, lat=$5, long=$6, updated_by=$7 WHERE id= $8;`
         const values = [name, email, profile, address, lat, long, updated_by, id]
         const result = await pool.query(sql, values);
         return result
     }
 
-    async deleteRestaurant(id){
-        
+    async deleteRestaurant(id) {
+
         const sql = 'delete from restaurant where id = $1 ';
         const values = [id];
-        const result  = await pool.query(sql,values);
+        const result = await pool.query(sql, values);
         console.log(result);
         return result
     }
@@ -59,10 +59,10 @@ class restaurantDal {
         return result
     }
 
-    async findRestaurantById_Name(created_by,name) {
+    async findRestaurantById_Name(created_by, name) {
 
         const sql = 'SELECT id FROM restaurant WHERE created_by  = $1 AND name = $2'
-        const values = [created_by,name]
+        const values = [created_by, name]
         const result = await pool.query(sql, values);
         return result
     }

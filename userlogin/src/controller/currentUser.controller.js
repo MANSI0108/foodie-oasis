@@ -1,11 +1,7 @@
-const currentUser = async (req, res,next) => {
-    try {
-  
-    res.json({id:req.user.id, username:req.user.username, role:req.user.role});
-      
-    } catch (error) {
-      next(error)
-    }
-  };
+const currentUser = async (req, res, next) => {
 
- module.exports = currentUser;
+  res.json({ id: req.user.id, username: req.user.username, role: req.user.role });
+
+};
+
+module.exports = currentUser;
