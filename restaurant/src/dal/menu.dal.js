@@ -13,7 +13,7 @@ class menuDal {
     async getMenu_By_ID({ restaurant_id, category_id, sub_category_id }) {
 
 
-        const sql = 'SELECT dish_name, price FROM restaurant_menu WHERE restaurant_id = $1 AND category_id = $2 AND sub_category_id= $3 '
+        const sql = 'SELECT id,dish_name, price FROM restaurant_menu WHERE restaurant_id = $1 AND category_id = $2 AND sub_category_id= $3 '
         const values = [restaurant_id, category_id, sub_category_id]
         const result = await pool.query(sql, values);
         return result

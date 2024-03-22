@@ -26,7 +26,7 @@ const getMenu = async function (req, res, next) {
 
   const { restaurant_id, category_id, sub_category_id } = req.body
   const result = await getMenuService({ restaurant_id, category_id, sub_category_id })
-
+  req.menu = result.rows
   res.json({ Menu: result.rows })
 }
 
