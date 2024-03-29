@@ -10,6 +10,7 @@
   "author": "Mansi Sojitra",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "dbmate": "^2.13.0",
     "dotenv": "^16.4.5",

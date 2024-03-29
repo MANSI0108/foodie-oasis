@@ -1,6 +1,7 @@
 const express = require("express");
-const { addtocart } = require("../controller/cart.controller");
-const router = express.Router({mergeParams : true})
+const { addtocart, getCart } = require("../controller/cart.controller");
+const { getRequestHandler } = require("../../helper");
+const router = express.Router({ mergeParams: true })
 
 
 
@@ -8,7 +9,11 @@ const router = express.Router({mergeParams : true})
 
 router
     .route('/addtocart/:id')
-    .post(addtocart);
+    .post(getRequestHandler(addtocart));
+
+router
+    .route('/getcart')
+    .get(getRequestHandler(getCart));
 
 
 
@@ -19,6 +24,4 @@ router
 
 
 
-
-
-module.exports =router;
+module.exports = router;

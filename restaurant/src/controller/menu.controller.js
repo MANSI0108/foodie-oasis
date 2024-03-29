@@ -1,5 +1,5 @@
 
-const { registerMenuService, getMenuService, updateMenuService, deleteMenuService } = require("../service/menu.service");
+const { registerMenuService, getMenuService, updateMenuService, deleteMenuService, getItemByID } = require("../service/menu.service");
 
 
 
@@ -30,7 +30,14 @@ const getMenu = async function (req, res, next) {
   res.json({ Menu: result.rows })
 }
 
+const getMenuByID = async function(req,res,next){
+  const menu_id = req.params.id
+  
+  const result = await getItemByID(menu_id)
+  req.menu = result.rows
+  res.json({Item : result.rows})
 
+}
 const updateMenu = async (req, res, next) => {
 
   const { dish_name, description, price, restaurant_id, category_id, sub_category_id } = req.body
@@ -72,5 +79,5 @@ const deleteMenu = async (req, res, next) => {
 
 
 
-module.exports = { registerMenu, getMenu, updateMenu, deleteMenu }
+module.exports = { registerMenu, getMenu, getMenuByID, updateMenu, deleteMenu }
 

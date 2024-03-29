@@ -22,4 +22,4 @@ const {
   console.log("Database Connected");
   
   
-  module.exports = pool
+module.exports = pool
