@@ -1,0 +1,141 @@
+openapi: 3.1.0
+info:
+  title: FOOD ORDERING APP
+  description: Food-Ordering API based on the OpenAPI 3.0 specification.
+  version: 1.0.0
+  contact: 
+    email: mansisojitra0108@gmail.com
+    url: "https://sample.dev"
+
+servers:
+  - url: http://localhost:3000/foodApp
+    description: localhost version userlogin server url  
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer    
+
+paths:
+  /register:
+     post:
+      tags:
+        - Userlogin
+      summary: Register with username, password, email, phone, role
+      consumes:
+        - application/json
+      produces:
+        - application/json  
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                     type: string
+                  password:
+                     type: string
+                  email:
+                     type: string       
+                  phone:
+                      type: string
+                  role:
+                      type: string  
+      responses:
+        '200': #status code
+          description: Register by username, password, email, phone, role
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  username:
+                     type: string
+                  password:
+                     type: string
+                  email:
+                     type: string       
+                  phone:
+                      type: string
+                  role:
+                      type: string        
+        400:
+          description: Bad request
+        500:
+          description: internal server error              
+
+
+  /login-User:
+     post:
+      tags:
+        - Userlogin
+      summary: Login with username, password, role
+      consumes:
+        - application/json
+      produces:
+        - application/json  
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                     type: string
+                  password:
+                     type: string
+                  role:
+                      type: string  
+      responses:
+        '200': #status code
+          description: Register by username, password, email, phone, role
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  message:
+                     type: string
+                  accessToken:
+                     type: string        
+        400:
+          description: Bad request
+        500:
+          description: internal server error          
+
+  /currentuser:
+    get:
+      tags:
+        - Userlogin
+      summary: Get Current User info after Login
+
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  role:
+                      type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    role :
+                      type: string   
+        400:
+          description: Bad request
+        500:
+          description: internal server error        
