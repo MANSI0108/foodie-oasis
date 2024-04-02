@@ -1,5 +1,5 @@
 
-const { registerService, getService, updateService, deleteService } = require("../service/restaurant.service");
+const { registerService, getService, updateService, deleteService, getRestaurantIDService } = require("../service/restaurant.service");
 
 
 
@@ -52,8 +52,8 @@ const updateRestaurant = async (req, res, next) => {
 const deleteRestaurant = async (req, res, next) => {
 
   const id = req.params.id
-  const ownerid = req.user.id
-  const result = await deleteService(id, ownerid);
+  const ownerId = req.user.id
+  const result = await deleteService(id, ownerId);
 
 
   if (result) {
@@ -61,11 +61,25 @@ const deleteRestaurant = async (req, res, next) => {
   }
   else {
     const err = new Error("you are not a owner");
-    err.statuscode = 400;
+    err.statusCode = 401;
     next(err);
   }
 }
 
+const getRestaurantID = async (req, res, next) => {
 
+  const itemId = req.params.itemId
+  console.log(itemId);
+  const result = await getRestaurantIDService(itemId);
+  if (result) {
+    return res.json(result.rows[0])
+  }
+  else {
+    const err = new Error("Restaurant Not Found");
+    err.statusCode = 404;
+    next(err);
+  }
 
-module.exports = { registerRestaurant, allRestaurant, updateRestaurant, deleteRestaurant }
+}
+
+module.exports = { registerRestaurant, allRestaurant, updateRestaurant, deleteRestaurant, getRestaurantID }

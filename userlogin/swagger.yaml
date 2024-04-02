@@ -13,12 +13,11 @@ servers:
 
 components:
   securitySchemes:
-    BasicAuth:
+    bearerAuth:            # arbitrary name for the security scheme
       type: http
-      scheme: basic
-    BearerAuth:
-      type: http
-      scheme: bearer    
+      scheme: bearer
+      bearerFormat: JWT
+  
 
 paths:
   /register:
@@ -95,7 +94,7 @@ paths:
                       type: string  
       responses:
         '200': #status code
-          description: Register by username, password, email, phone, role
+          description: Get Accesstoken
           content:
             application/json:
               schema: 
@@ -115,16 +114,8 @@ paths:
       tags:
         - Userlogin
       summary: Get Current User info after Login
-
-      requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  role:
-                      type: string
+      security:
+        - bearerAuth: []  
       responses:
         200:
           description: Ok
@@ -133,9 +124,16 @@ paths:
               schema:
                 type: object
                 properties:
+                    id:
+                      type: string
+                    username:
+                      type: string  
                     role :
                       type: string   
         400:
           description: Bad request
         500:
           description: internal server error        
+
+
+ 

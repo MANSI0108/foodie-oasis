@@ -39,4 +39,14 @@ const deleteService = async (id, ownerid) => {
 
 }
 
-module.exports = { registerService, getService, updateService, deleteService };
+const getRestaurantIDService = async (itemId) => {
+    const restaurant = await restaurantDal.findRestaurantByItemId(itemId);
+    if (restaurant.rows[0]) {
+        return restaurant;
+    }
+    else {
+        return false
+    }
+}
+
+module.exports = { registerService, getService, updateService, deleteService, getRestaurantIDService };

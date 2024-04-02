@@ -16,7 +16,7 @@ const getMenuService = async ({ restaurant_id, category_id, sub_category_id }) =
 
 }
 
-const getItemByID = async(menu_id) => {
+const getItemByID = async (menu_id) => {
 
     const dal_result = await menuDal.getMenuID(menu_id);
     return dal_result;
@@ -31,7 +31,9 @@ const updateMenuService = async ({ menu_id, category_id, restaurant_id, dish_nam
         return dal_result
     }
     else {
-        throw new Error("Menu Not Exist")
+        const err = new Error("Menu Not Found");
+        err.statusCode = 404;
+        throw err
     }
 }
 
@@ -46,9 +48,11 @@ const deleteMenuService = async ({ id, ownerid }) => {
     }
 
     else {
-        throw new Error("Menu Not Exist")
+        const err = new Error("Menu Not Found");
+        err.statusCode = 404;
+        throw err
     }
 
 }
 
-module.exports = { registerMenuService, getMenuService, updateMenuService, deleteMenuService, getItemByID};
+module.exports = { registerMenuService, getMenuService, updateMenuService, deleteMenuService, getItemByID };
