@@ -2,6 +2,7 @@ const restaurantDal = require("../dal/restaurant.dal");
 
 const handleRegisterData = async (req, res, next) => {
     const { name, email, address, lat, long } = req.body;
+
     const profile = req.file.filename;
     const created_by = req.user.id;
     const updated_by = req.user.id;

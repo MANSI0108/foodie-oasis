@@ -27,7 +27,6 @@ const registerRestaurant = async (req, res, next) => {
 const allRestaurant = async (req, res, next) => {
 
   const result = await getService()
-  console.log(result.rows);
   res.json({ restaurants: result.rows })
 
 }
@@ -40,12 +39,17 @@ const updateRestaurant = async (req, res, next) => {
   const id = req.params.id
   const restaurant = await updateService(id, name, email, profile, address, lat, long, updated_by)
 
-  res.json(
-    {
-      message: "Restaurant updated Successfully",
-      restaurant: restaurant.rows[0]
-    },)
+  if (restaurant.rowCount) {
+    res.json(
+      {
+        message: "Restaurant updated Successfully"
+      })
+  }
+  else {
+    return false
+  }
 }
+
 
 
 
@@ -55,21 +59,20 @@ const deleteRestaurant = async (req, res, next) => {
   const ownerId = req.user.id
   const result = await deleteService(id, ownerId);
 
-
-  if (result) {
+  if (result.rowCount) {
     return res.json("Deleted Successfully")
   }
   else {
     const err = new Error("you are not a owner");
     err.statusCode = 401;
     next(err);
+
   }
 }
 
 const getRestaurantID = async (req, res, next) => {
 
   const itemId = req.params.itemId
-  console.log(itemId);
   const result = await getRestaurantIDService(itemId);
   if (result) {
     return res.json(result.rows[0])

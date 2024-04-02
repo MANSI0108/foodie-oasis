@@ -47,7 +47,6 @@ class restaurantDal {
         const sql = 'delete from restaurant where id = $1 ';
         const values = [id];
         const result = await pool.query(sql, values);
-        console.log(result);
         return result
     }
 
@@ -71,6 +70,14 @@ class restaurantDal {
         const sql = 'SELECT restaurant_id FROM restaurant_menu WHERE id=$1'
         const values = [itemId]
         const result = await pool.query(sql, values);
+        return result
+    }
+
+    async deleteRestaurantMenu(restaurant_id){
+        const sql = 'delete from restaurant_menu where restaurant_id = $1 ';
+        const values = [restaurant_id];
+        const result = await pool.query(sql, values);
+        console.log(result);
         return result
     }
 
