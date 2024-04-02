@@ -27,14 +27,18 @@ const deleteService = async (id, ownerid) => {
     const restaurant = await restaurantDal.findRestaurantById(id);
 
     if ((restaurant.rows[0] != null) && (ownerid === restaurant.rows[0].created_by)) {
+        const ans = await restaurantDal.deleteRestaurantMenu(restaurant.rows[0].id)
+        if (ans.rowCount) {
+            const dal_result = await restaurantDal.deleteRestaurant(id);
+            return dal_result;
+        }
 
-        const dal_result = await restaurantDal.deleteRestaurant(id);
-        console.log(dal_result);
-        return dal_result;
     }
 
     else {
-        return false;
+        const err = new Error("Restaurant not found");
+        err.statusCode = 404;
+        throw err
     }
 
 }
