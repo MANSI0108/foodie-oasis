@@ -3,11 +3,7 @@
 const { createClient } = require("redis");
 const client = createClient().on('error', (err) => { throw err })
 
-
-
-
 const getRequestHandler = (fn) => async (request, response, next) => {
-
 
   try {
 

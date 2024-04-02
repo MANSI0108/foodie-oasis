@@ -16,19 +16,24 @@ const loginService = async (username, password, role) => {
     const { rows, rowCount } = await userDal.findAdminByusername(username, '');
 
     if (rowCount === 0) {
-        throw new Error("User does not exist");
+        const err = new Error("User Not Found");
+        err.statusCode = 404;
+        next(err);
+
     }
     const user = rows[0];
     const checkPass = await bcrypt.compare(password, user.password);
 
     if (!checkPass) {
         const err = new Error("Password is not correct");
+        err.statusCode = 203;
         throw err
     }
     delete user.password;
 
     if (role != user.role) {
         const err = new Error("Unauthorized User")
+        err.statusCode = 401;
         throw err
     }
 

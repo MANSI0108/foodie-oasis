@@ -66,7 +66,13 @@ class restaurantDal {
         const result = await pool.query(sql, values);
         return result
     }
-
+   
+    async findRestaurantByItemId(itemId){
+        const sql = 'SELECT restaurant_id FROM restaurant_menu WHERE id=$1'
+        const values = [itemId]
+        const result = await pool.query(sql, values);
+        return result
+    }
 
 }
 

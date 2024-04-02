@@ -1,7 +1,7 @@
-
+require("dotenv").config();
 const jwt = require('jsonwebtoken')
 
-const secretKey = process.env.JWT_SECRET;
+const secretKey = process.env.JWT_SECRET
 const verifyToken = async (req, res, next) => {
     const bearerHeader = await req.headers["authorization"];
     if (!bearerHeader) {
@@ -22,7 +22,7 @@ const verifyToken = async (req, res, next) => {
                 next();
             });
             if (!token) {
-                next(new Error("user is not authorized"));
+                next(new Error("User is not authorized"));
             }
         } else {
             const err = new Error("Token Expired")

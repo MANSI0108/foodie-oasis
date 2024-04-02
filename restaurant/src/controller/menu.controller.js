@@ -70,8 +70,8 @@ const deleteMenu = async (req, res, next) => {
     return res.json("Deleted Successfully")
   }
   else {
-    const err = new Error("you are not a owner");
-    err.statuscode = 400;
+    const err = new Error("You are not a owner");
+    err.statusCode = 401;
     next(err);
   }
 

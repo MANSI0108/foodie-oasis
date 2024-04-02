@@ -14,24 +14,23 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: cart; Type: TABLE; Schema: public; Owner: -
+-- Name: orderitems; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.cart (
+CREATE TABLE public.orderitems (
     id integer NOT NULL,
-    dish character varying(255) NOT NULL,
-    price numeric(10,2) NOT NULL,
-    quantity integer DEFAULT 1,
-    cretedat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    createdby integer NOT NULL
+    orderid integer NOT NULL,
+    itemid integer NOT NULL,
+    itemname character varying(255) NOT NULL,
+    itemprice integer NOT NULL
 );
 
 
 --
--- Name: cart_createdby_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: orderitems_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.cart_createdby_seq
+CREATE SEQUENCE public.orderitems_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -41,17 +40,17 @@ CREATE SEQUENCE public.cart_createdby_seq
 
 
 --
--- Name: cart_createdby_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: orderitems_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.cart_createdby_seq OWNED BY public.cart.createdby;
+ALTER SEQUENCE public.orderitems_id_seq OWNED BY public.orderitems.id;
 
 
 --
--- Name: cart_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: orderitems_itemid_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.cart_id_seq
+CREATE SEQUENCE public.orderitems_itemid_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -61,10 +60,30 @@ CREATE SEQUENCE public.cart_id_seq
 
 
 --
--- Name: cart_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: orderitems_itemid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.cart_id_seq OWNED BY public.cart.id;
+ALTER SEQUENCE public.orderitems_itemid_seq OWNED BY public.orderitems.itemid;
+
+
+--
+-- Name: orderitems_orderid_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orderitems_orderid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orderitems_orderid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orderitems_orderid_seq OWNED BY public.orderitems.orderid;
 
 
 --
@@ -75,8 +94,8 @@ CREATE TABLE public.orders (
     id integer NOT NULL,
     userid integer NOT NULL,
     restaurantid integer NOT NULL,
-    total_amount integer,
-    cretedat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    total_amount integer NOT NULL,
+    createdat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updatedat timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -151,17 +170,24 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: cart id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: orderitems id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.cart ALTER COLUMN id SET DEFAULT nextval('public.cart_id_seq'::regclass);
+ALTER TABLE ONLY public.orderitems ALTER COLUMN id SET DEFAULT nextval('public.orderitems_id_seq'::regclass);
 
 
 --
--- Name: cart createdby; Type: DEFAULT; Schema: public; Owner: -
+-- Name: orderitems orderid; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.cart ALTER COLUMN createdby SET DEFAULT nextval('public.cart_createdby_seq'::regclass);
+ALTER TABLE ONLY public.orderitems ALTER COLUMN orderid SET DEFAULT nextval('public.orderitems_orderid_seq'::regclass);
+
+
+--
+-- Name: orderitems itemid; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orderitems ALTER COLUMN itemid SET DEFAULT nextval('public.orderitems_itemid_seq'::regclass);
 
 
 --
@@ -186,11 +212,11 @@ ALTER TABLE ONLY public.orders ALTER COLUMN restaurantid SET DEFAULT nextval('pu
 
 
 --
--- Name: cart cart_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: orderitems orderitems_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.cart
-    ADD CONSTRAINT cart_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.orderitems
+    ADD CONSTRAINT orderitems_pkey PRIMARY KEY (id);
 
 
 --
@@ -207,6 +233,14 @@ ALTER TABLE ONLY public.orders
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: orderitems fk_special; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orderitems
+    ADD CONSTRAINT fk_special FOREIGN KEY (orderid) REFERENCES public.orders(id);
 
 
 --

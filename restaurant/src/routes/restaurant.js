@@ -1,7 +1,6 @@
 const express = require("express");
-const { registerRestaurant, allRestaurant, updateRestaurant, deleteRestaurant } = require("../controller/restaurant.controller");
+const { registerRestaurant, allRestaurant, updateRestaurant, deleteRestaurant, getRestaurantID } = require("../controller/restaurant.controller");
 const { handleRegisterData } = require("../middleware/validation ");
-const verifyToken = require("../middleware/verifyToken");
 const upload = require("../middleware/multer");
 const { isOwner, getRequestHandler } = require("../../helper");
 
@@ -27,6 +26,13 @@ router
 router
     .route('/deleteRestaurant/:id')
     .delete(getRequestHandler(deleteRestaurant))
+
+    
+//@private-route
+
+router
+    .route('/restaurant/:itemId')
+    .get(getRequestHandler(getRestaurantID))
 
 
 module.exports = router
