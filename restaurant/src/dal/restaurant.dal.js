@@ -19,23 +19,25 @@ class restaurantDal {
 
 
 
-    async getRestaurant({ client, sort, sortBy, sortType, search }) {
+    async getRestaurant({ client, sort, sortBy, sortType, search, page }) {
+        const limit = 10
+        const offset = (page - 1) * limit
         const str = 'SELECT* FROM restaurant'
         var sql = ""
         if (sort && search) {
 
-            sql = str + ` WHERE name LIKE '${search}%' ORDER BY ${sortBy} ${sortType} `
+            sql = str + ` WHERE name LIKE '${search}%' ORDER BY ${sortBy} ${sortType} LIMIT ${limit} OFFSET ${offset} `
 
         }
 
         else if (sort) {
-            sql = str + ` ORDER BY ${sortBy} ${sortType} `
+            sql = str + ` ORDER BY ${sortBy} ${sortType} LIMIT ${limit} OFFSET ${offset} `
 
         }
 
         else if (search) {
 
-            sql = str + ` WHERE name LIKE '${search}%' `
+            sql = str + ` WHERE name LIKE '${search}%' LIMIT ${limit} OFFSET ${offset} `
 
         }
         else {
