@@ -1,6 +1,3 @@
-const menuDal = require("../dal/menu.dal");
-const restaurantDal = require("../dal/restaurant.dal");
-
 const handleMenuData = async (req, res, next) => {
 
     const { dish_name, description, price, restaurant_id, category_id, sub_category_id } = req.body
@@ -13,20 +10,8 @@ const handleMenuData = async (req, res, next) => {
         err.statusCode = 400;
         next(err);
     }
-    try {
 
-        const res_id = await restaurantDal.findRestaurantById(restaurant_id);
-
-        if (res_id.rows.length == 0) {
-            const err = new Error("Restaurant Not Exist")
-            err.statusCode = 401;
-            return next(err)
-        }
-        next()
-    }
-    catch (err) {
-        next(err)
-    }
+    next()
 
 };
 

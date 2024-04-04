@@ -23,7 +23,7 @@ const verifyToken = async (req, res, next) => {
 
                 next();
             });
-            // console.log(token);
+            
             if (!token) {
                 next(new Error("user is not authorized"));
             }

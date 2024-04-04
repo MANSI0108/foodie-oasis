@@ -5,19 +5,21 @@ const bcrypt = require("bcrypt")
 
 const registerUser = async (req, res, next) => {
 
+  const client = req.client
+
   const { username, password, email, phone, role } = req.body
-  const user = await registerService(username, password, email, phone, role)
+  const user = await registerService({ client, username, password, email, phone, role })
 
   // generate 6 digit otp
   let OTP = generateOTP();
 
   const token = await bcrypt.hash(OTP, 10);
+  const user_id = user.rows[0].id;
 
   //store otp in email-verification -table
-  const dal_result = mailService(token, user.rows[0].id);
+  mailService({ client, token, user_id });
 
   // send that otp to our user
-
   var transport = generateMailTransporter();
 
   transport.sendMail({

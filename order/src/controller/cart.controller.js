@@ -11,58 +11,63 @@ const addtocart = async (req, res, next) => {
 
   //   internal api call using aixos
   const item = await getItem(id, token);
-  console.log(item);
   const { dish_name, price } = item
   const quantity = req.body.quantity
-
+// console.log(quantity);
   const object = {
+    id,
     dish_name,
     price,
     quantity
   }; 
+  // console.log(object);
 
-  const dishes = {
-    [id] : object
+  const dishes = [object]
+  // console.log( await client.exists(`user:${userId.toString()}`));
+
+  if (await client.exists(`user:${userId.toString()}`) == 0) {
+    const setItem = await client.set(`user:${userId.toString()}`, JSON.stringify(dishes))
+
   }
 
-  if(await client.exists(`user:${userId.toString()}`) == 0){
-    const setItem = await client.set(`user:${userId.toString()}`, JSON.stringify({items:dishes}))
-  }
-  
-  const list =  JSON.parse(await client.get (`user:${userId.toString()}`));
+  const list = JSON.parse(await client.get(`user:${userId.toString()}`));
+  console.log(list);
+  const isExist = (list.findIndex(x => x.id == `${id}`))
+  const existQuantity = (list.find(x => x.quantity == `${quantity}`))
 
-  if(list.items.id != id){
-    list.items[id] = object
+  if (isExist < 0) {
+    list.push(object)
   }
-  else if(list.items.id.quantity != quantity && list.items.id == id){
-    list.items.id.quantity = quantity
+
+  else if (isExist >= 0 && existQuantity != quantity) { 
+    list[isExist].quantity = quantity
   }
 
   const container = await client.set(`user:${userId.toString()}`, JSON.stringify(list))
 
   if (container) {
-    return res.json({Massege:"added Item SuccessFully", container})
+    return res.json({ Massege: "added Item SuccessFully", container })
   }
 
 }
 
 const getCart = async (req, res, next) => {
   const userId = req.user.id
-  const list = JSON.parse (await client.get (`user:${userId.toString()}`));
+  const list = JSON.parse(await client.get(`user:${userId.toString()}`));
   res.json(list)
 
 }
 
-const deletecart = async(req,res,next)=>{
- 
-   const userId = req.user.id
-   const emptycart = await client.del((`user:${userId.toString()}`));
-   if(emptycart){
-    return res.json({Message:"Your Cart is Empty Now"})
-   }
+const deletecart = async (req, res, next) => {
+
+  const userId = req.user.id
+  const emptycart = await client.del((`user:${userId.toString()}`));
+  if (emptycart) {
+    return res.json({ Message: "Your Cart is Empty Now" })
+  }
 
 }
 
 
- 
-module.exports = { addtocart, getCart, deletecart} 
+
+module.exports = { addtocart, getCart, deletecart } 

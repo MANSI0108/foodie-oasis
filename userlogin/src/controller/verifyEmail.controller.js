@@ -5,28 +5,30 @@ const { generateMailTransporter } = require("../utils/mail.js");
 const jwt = require("jsonwebtoken");
 
 const verifyEmail = async (req, res, next) => {
+
+  const client = req.client
   const { email, OTP } = req.body;
 
-  const user = await userDal.findUserByEmail(email)
-
+  const user = await userDal.findUserByEmail({client, email})
+  const user_id = user.rows[0].id
   if (!user.rows[0]) {
     return next(new Error("User Not Found"))
   };
 
   if (user.rows[0].isveryfied) return next(new Error("User is already verified"))
 
-  const token = await emailverifyTokenDal.findToken(user.rows[0].id)
+  const token = await emailverifyTokenDal.findToken({client, user_id})
 
   if (!token.rows[0]) return next(new Error("Token Not Found"))
   if (token.rows[0]) { }
   const ismatched = await bcrypt.compare(OTP, token.rows[0].token);
   if (!ismatched) return next(new Error("Your OTP is Not Valid!"))
 
-  const updateStatus = await userDal.changeVerifiedStatus(user.rows[0].id)
+  const updateStatus = await userDal.changeVerifiedStatus({client,user_id})
 
   if (updateStatus) {
 
-    await emailverifyTokenDal.deleteToken(user.rows[0].id);
+    await emailverifyTokenDal.deleteToken({client, user_id});
 
   }
 
@@ -41,10 +43,10 @@ const verifyEmail = async (req, res, next) => {
 
   const jwtToken = jwt.sign({ user_id: user.rows[0].id }, process.env.JWT_SECRET);
 
-  const newuser = await userDal.findUserByEmail(email)
+  const newuser = await userDal.findUserByEmail({client, email})
 
   res.json({
-    user: {
+    user: { 
       id: newuser.rows[0].id,
       name: newuser.rows[0].username,
       email: newuser.rows[0].email,

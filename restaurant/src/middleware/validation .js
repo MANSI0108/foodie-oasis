@@ -1,4 +1,4 @@
-const restaurantDal = require("../dal/restaurant.dal");
+
 
 const handleRegisterData = async (req, res, next) => {
     const { name, email, address, lat, long } = req.body;
@@ -15,32 +15,22 @@ const handleRegisterData = async (req, res, next) => {
         next(err);
     }
 
-
-    if (email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) === null) {
-        const err = new Error("Email is not valid")
-        err.statusCode = 400;
-        next(err);
-    }
-
-    if (role != "owner") {
-        const err = new Error("You Are Not a Owner")
-        err.statusCode = 401
-        next(err)
-    }
-
-    try {
-        const result = await restaurantDal.findRestaurantByEmail(email);
-
-        if (result.rows.length > 0) {
-            const err = new Error("Restaurant is already exist")
-            err.statusCode = 302;
+    else{
+        if (email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) === null) {
+            const err = new Error("Email is not valid")
+            err.statusCode = 400;
             next(err);
         }
-
-        next();
-    } catch (err) {
-        next(err)
+    
+        if (role != "owner") {
+            const err = new Error("You Are Not a Owner")
+            err.statusCode = 401
+            next(err)
+        }
+        next()
     }
+
+  
 };
 
 
