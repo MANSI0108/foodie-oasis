@@ -29,8 +29,9 @@ const registerMenu = async (req, res, next) => {
 const getMenu = async function (req, res, next) {
 
   const client = req.client
-  const { restaurant_id, category_id, sub_category_id } = req.body
-  const result = await getMenuService({ client, restaurant_id, category_id, sub_category_id })
+
+  const { sort, sortBy, sortType, search, restaurant_id, category_id, sub_category_id } = req.query;
+  const result = await getMenuService({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id })
   req.menu = result.rows
   res.json({ Menu: result.rows })
 }
