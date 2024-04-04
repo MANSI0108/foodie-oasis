@@ -8,11 +8,11 @@ router
     .post(getRequestHandler(addtocart));
 
 router
-    .route('/getcart')
+    .route('/')
     .get(getRequestHandler(getCart));
 
 router
-    .route('/deletecart')
+    .route('/delete')
     .delete(getRequestHandler(deletecart))
 
 
