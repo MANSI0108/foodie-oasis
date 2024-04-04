@@ -6,23 +6,23 @@ const router = express.Router({ mergeParams: true })
 
 
 router
-    .route('/addMenu')
+    .route('/add')
     .post(isOwner, handleMenuData, getRequestHandler(registerMenu));
 
 router
-    .route('/getMenu')
+    .route('/')
     .get(getRequestHandler(getMenu))
 
 router
-    .route('/getMenu/:id')
+    .route('/:id')
     .get(getRequestHandler(getMenuByID))
 
 router
-    .route('/updateMenu/:id')
+    .route('/update/:id')
     .patch(isOwner, handleMenuData, getRequestHandler(updateMenu))
 
 router
-    .route('/deleteMenu/:id')
+    .route('/delete/:id')
     .delete(isOwner, getRequestHandler(deleteMenu))
 
 

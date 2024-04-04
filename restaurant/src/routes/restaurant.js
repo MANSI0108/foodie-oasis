@@ -12,26 +12,26 @@ const router = express.Router({ mergeParams: true })
 
 
 router
-    .route('/registerRestaurant')
+    .route('/register')
     .post(upload.single("profile"), handleRegisterData, getRequestHandler(registerRestaurant));
 
 router
-    .route('/allRestaurant')
+    .route('/')
     .get(getRequestHandler(allRestaurant))
 
 router
-    .route('/updateRestaurant/:id')
+    .route('/update/:id')
     .patch(upload.single("profile"), isOwner, getRequestHandler(updateRestaurant))
 
 router
-    .route('/deleteRestaurant/:id')
+    .route('/delete/:id')
     .delete(getRequestHandler(deleteRestaurant))
 
     
 //@private-route
 
 router
-    .route('/restaurant/:itemId')
+    .route('/:itemId')
     .get(getRequestHandler(getRestaurantID))
 
 

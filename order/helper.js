@@ -6,8 +6,8 @@ const client = createClient().on('error', (err) => { throw err })
 //Request Handler
 
 const getRequestHandler = (fn) => async (request, response, next) => {
-  const client = await pool.connect();
-  request.client = client
+  const dbClient = await pool.connect();
+  request.client = dbClient
   try {
 
     await fn(request, response, next);
@@ -20,4 +20,4 @@ const getRequestHandler = (fn) => async (request, response, next) => {
 
 }
 
-module.exports = { client, getRequestHandler }  
+module.exports = { client, getRequestHandler }   

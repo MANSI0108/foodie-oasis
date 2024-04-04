@@ -16,7 +16,7 @@ router
     .post(handleRegisterData, getRequestHandler(registerUser));
 
 router
-    .route('/login-User')
+    .route('/login')
     .post(handleLoginData, getRequestHandler(loginUser))
 
 router

@@ -5,7 +5,6 @@ const { getItem } = require("../services/apiCall.service");
 const addtocart = async (req, res, next) => {
 
   const id = req.params.id;
-  // console.log(id);
   const userId = req.user.id
   const token = req.rawHeaders[1]
 
@@ -13,17 +12,16 @@ const addtocart = async (req, res, next) => {
   const item = await getItem(id, token);
   const { dish_name, price } = item
   const quantity = req.body.quantity
-// console.log(quantity);
+
   const object = {
     id,
     dish_name,
     price,
     quantity
   }; 
-  // console.log(object);
+
 
   const dishes = [object]
-  // console.log( await client.exists(`user:${userId.toString()}`));
 
   if (await client.exists(`user:${userId.toString()}`) == 0) {
     const setItem = await client.set(`user:${userId.toString()}`, JSON.stringify(dishes))
@@ -31,7 +29,6 @@ const addtocart = async (req, res, next) => {
   }
 
   const list = JSON.parse(await client.get(`user:${userId.toString()}`));
-  console.log(list);
   const isExist = (list.findIndex(x => x.id == `${id}`))
   const existQuantity = (list.find(x => x.quantity == `${quantity}`))
 

@@ -5,7 +5,7 @@ const getItem = async (id, token) => {
     const menuId = id;
 
 
-    const response = await axios.get(`http://127.0.0.1:3001/foodApp/menu/getMenu/${menuId}`, {
+    const response = await axios.get(`http://127.0.0.1:3001/foodApp/menu/${menuId}`, {
         headers: {
             'Authorization': token
         }
