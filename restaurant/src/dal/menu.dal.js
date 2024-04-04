@@ -10,19 +10,20 @@ class menuDal {
         return result
     }
 
-    async getMenu({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id }) {
-
+    async getMenu({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id, page }) {
+        const limit = 10;
+        const offset = (page-1)*limit
         const str = "SELECT id, dish_name, price FROM restaurant_menu WHERE restaurant_id = $1 AND category_id = $2 AND sub_category_id= $3"
         var sql = ""
 
         if (sort && search) {
-            sql = `${str} AND dish_name LIKE '%${search}%' ORDER BY ${sortBy} ${sortType} `
+            sql = `${str} AND dish_name LIKE '%${search}%' ORDER BY ${sortBy} ${sortType} LIMIT ${limit} OFFSET ${offset}`
         }
         else if (sort) {
-            sql = `${str} ORDER BY ${sortBy} ${sortType} `
+            sql = `${str} ORDER BY ${sortBy} ${sortType} LIMIT ${limit} OFFSET ${offset}`
         }
         else if (search) {
-            sql = `${str} AND dish_name LIKE '%${search}%' `
+            sql = `${str} AND dish_name LIKE '%${search}%' LIMIT ${limit} OFFSET ${offset} `
         }
         else {
             sql = str

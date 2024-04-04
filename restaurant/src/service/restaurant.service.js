@@ -19,9 +19,9 @@ const registerService = async ({ client, name, email, profile, address, lat, lon
 
 }
 
-const getService = async ({ client, sort, sortBy, sortType, search }) => {
+const getService = async ({ client, sort, sortBy, sortType, search, page }) => {
 
-    const dal_result = await restaurantDal.getRestaurant({ client, sort, sortBy, sortType, search })
+    const dal_result = await restaurantDal.getRestaurant({ client, sort, sortBy, sortType, search, page})
     return dal_result
 
 }
