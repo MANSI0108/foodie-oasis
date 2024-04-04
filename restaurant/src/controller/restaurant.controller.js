@@ -5,12 +5,13 @@ const { registerService, getService, updateService, deleteService, getRestaurant
 
 const registerRestaurant = async (req, res, next) => {
 
+  const client = req.client
   const { name, email, address, lat, long } = req.body
   const profile = req.file.filename;
   const created_by = req.user.id;
   const updated_by = req.user.id
 
-  const restaurant = await registerService(name, email, profile, address, lat, long, created_by, updated_by)
+  const restaurant = await registerService({ client, name, email, profile, address, lat, long, created_by, updated_by })
 
   const myURL = new URL(`http://localhost:3001/foodApp/registerRestaurant/${req.file.filename}`);
 
@@ -25,20 +26,22 @@ const registerRestaurant = async (req, res, next) => {
 
 
 const allRestaurant = async (req, res, next) => {
-
-  const result = await getService()
+  const client = req.client
+  const result = await getService({ client })
   res.json({ restaurants: result.rows })
 
 }
 
 
 const updateRestaurant = async (req, res, next) => {
+  const client = req.client
+  console.log("ok");
   const { name, email, address, lat, long } = req.body
   const profile = req.file.filename;
-  const updated_by = req.user.id
+  const ownerId = req.user.id
   const id = req.params.id
-  const restaurant = await updateService(id, name, email, profile, address, lat, long, updated_by)
-
+  const restaurant = await updateService({ client, id, name, email, profile, address, lat, long, ownerId })
+  console.log(restaurant.rowCount);
   if (restaurant.rowCount) {
     res.json(
       {
@@ -46,7 +49,9 @@ const updateRestaurant = async (req, res, next) => {
       })
   }
   else {
-    return false
+    const err = new Error("Something is Wrong")
+    err.statusCode = 500
+    throw err
   }
 }
 
@@ -54,17 +59,17 @@ const updateRestaurant = async (req, res, next) => {
 
 
 const deleteRestaurant = async (req, res, next) => {
-
+  const client = req.client
   const id = req.params.id
   const ownerId = req.user.id
-  const result = await deleteService(id, ownerId);
+  const result = await deleteService({ client, id, ownerId });
 
   if (result.rowCount) {
     return res.json("Deleted Successfully")
   }
   else {
-    const err = new Error("you are not a owner");
-    err.statusCode = 401;
+    const err = new Error("Somthing is Wrong");
+    err.statusCode = 500;
     next(err);
 
   }
@@ -72,8 +77,9 @@ const deleteRestaurant = async (req, res, next) => {
 
 const getRestaurantID = async (req, res, next) => {
 
+  const client = req.client
   const itemId = req.params.itemId
-  const result = await getRestaurantIDService(itemId);
+  const result = await getRestaurantIDService({ client, itemId });
   if (result) {
     return res.json(result.rows[0])
   }

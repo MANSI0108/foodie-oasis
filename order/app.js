@@ -1,9 +1,9 @@
 const express = require("express");
 const ErrorHandler = require("./src/middleware/asyncHandler");
-const cartRoute = require('./src/routes/cartRoute');
+const Routes = require("./src/routes/index.js")
 const { client } = require("./helper");
 const verifyToken = require("./src/middleware/verifyToken");
-const orderRoute = require('./src/routes/orderRoute.js')
+
 
 const app = express();
 
@@ -16,9 +16,8 @@ const connection = client.connect();
 
 app.use(verifyToken)
 
-app.use('/foodApp/cart', cartRoute)
-app.use('/foodApp/order', orderRoute)
-
+app.use("/foodApp", Routes )
+ 
 app.use(ErrorHandler)
 
 module.exports = app;      

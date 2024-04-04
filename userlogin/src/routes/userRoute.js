@@ -25,7 +25,7 @@ router
 
 router
     .route('/verify-email')
-    .post(verifyEmail)
+    .post(getRequestHandler(verifyEmail))
 
 
 
