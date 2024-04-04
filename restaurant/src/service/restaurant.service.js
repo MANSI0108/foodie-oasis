@@ -19,10 +19,11 @@ const registerService = async ({ client, name, email, profile, address, lat, lon
 
 }
 
-const getService = async ({ client }) => {
+const getService = async ({ client, sort, sortBy, sortType, search }) => {
 
-    const dal_result = await restaurantDal.getRestaurant({ client });
-    return dal_result;
+    const dal_result = await restaurantDal.getRestaurant({ client, sort, sortBy, sortType, search })
+    return dal_result
+
 }
 
 
@@ -30,9 +31,9 @@ const updateService = async ({ client, id, name, email, profile, address, lat, l
 
     const isExist = await restaurantDal.findRestaurantById({ client, id });
     if (isExist.rowCount) {
-        console.log(isExist.rows);
+
         const created_by = isExist.rows[0].created_by;
-        console.log(created_by);
+
         if (created_by == ownerId) {
             const dal_result = await restaurantDal.updateRestaurant({ client, id, name, email, profile, address, lat, long, ownerId });
             return dal_result;
@@ -46,7 +47,7 @@ const updateService = async ({ client, id, name, email, profile, address, lat, l
     }
     else {
         const err = new Error("Restuarant not Found")
-        RegExp.statusCode = 404
+        err.statusCode = 404
         throw err
     }
 

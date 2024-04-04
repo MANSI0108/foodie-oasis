@@ -10,10 +10,24 @@ class menuDal {
         return result
     }
 
-    async getMenu_By_ID({ client, restaurant_id, category_id, sub_category_id }) {
+    async getMenu({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id }) {
 
+        const str = "SELECT id, dish_name, price FROM restaurant_menu WHERE restaurant_id = $1 AND category_id = $2 AND sub_category_id= $3"
+        var sql = ""
 
-        const sql = 'SELECT id,dish_name, price FROM restaurant_menu WHERE restaurant_id = $1 AND category_id = $2 AND sub_category_id= $3 '
+        if (sort && search) {
+            sql = `${str} AND dish_name LIKE '%${search}%' ORDER BY ${sortBy} ${sortType} `
+        }
+        else if (sort) {
+            sql = `${str} ORDER BY ${sortBy} ${sortType} `
+        }
+        else if (search) {
+            sql = `${str} AND dish_name LIKE '%${search}%' `
+        }
+        else {
+            sql = str
+        }
+
         const values = [restaurant_id, category_id, sub_category_id]
         const result = await client.query(sql, values);
         return result

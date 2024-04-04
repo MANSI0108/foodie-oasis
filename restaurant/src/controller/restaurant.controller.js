@@ -26,8 +26,10 @@ const registerRestaurant = async (req, res, next) => {
 
 
 const allRestaurant = async (req, res, next) => {
+
   const client = req.client
-  const result = await getService({ client })
+  const {sort, sortType, sortBy, search} = req.query
+  const result = await getService({ client, sort, sortBy, sortType, search })
   res.json({ restaurants: result.rows })
 
 }

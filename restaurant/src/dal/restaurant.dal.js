@@ -17,9 +17,43 @@ class restaurantDal {
         return result
     }
 
-    async getRestaurant({ client }) {
 
-        const sql = 'SELECT * FROM restaurant'
+
+    async getRestaurant({ client, sort, sortBy, sortType, search }) {
+        const str = 'SELECT* FROM restaurant'
+        var sql = ""
+        if (sort && search) {
+
+            sql = str + ` WHERE name LIKE '${search}%' ORDER BY ${sortBy} ${sortType} `
+
+        }
+
+        else if (sort) {
+            sql = str + ` ORDER BY ${sortBy} ${sortType} `
+
+        }
+
+        else if (search) {
+
+            sql = str + ` WHERE name LIKE '${search}%' `
+
+        }
+        else {
+            sql = str
+        }
+        const result = await client.query(sql);
+        return result
+
+    }
+
+    async getRestaurantSortBy({ client, sortBy, sortType }) {
+        const sql = `SELECT * FROM restaurant ORDER BY ${sortBy} ${sortType}`
+        const result = await client.query(sql);
+        return result
+    }
+
+    async getRestaurantBySearch({ client, search }) {
+        const sql = `SELECT * FROM restaurant WHERE name LIKE '${search}%'`
         const result = await client.query(sql);
         return result
     }

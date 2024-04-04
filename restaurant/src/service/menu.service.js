@@ -16,9 +16,9 @@ const registerMenuService = async ({ client, category_id, restaurant_id, dish_na
 
 }
 
-const getMenuService = async ({ client, restaurant_id, category_id, sub_category_id }) => {
-
-    const dal_result = await menuDal.getMenu_By_ID({ client, restaurant_id, category_id, sub_category_id });
+const getMenuService = async ({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id }) => {
+ 
+    const dal_result = await menuDal.getMenu({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id });
     return dal_result;
 
 
