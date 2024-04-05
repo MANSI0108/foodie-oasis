@@ -11,34 +11,41 @@ const addtocart = async (req, res, next) => {
   //   internal api call using aixos
   const item = await getItem(id, token);
   const { dish_name, price } = item
+  const updated_by = Date.now()
   const quantity = req.body.quantity
 
   const object = {
     id,
     dish_name,
     price,
-    quantity
-  }; 
+    quantity,
+  };
 
 
-  const dishes = [object]
-
+  const items = [object]
+  const dishes = {items,  updated_by }
+  // console.log(dishes);
   if (await client.exists(`user:${userId.toString()}`) == 0) {
     const setItem = await client.set(`user:${userId.toString()}`, JSON.stringify(dishes))
-
+  
   }
 
   const list = JSON.parse(await client.get(`user:${userId.toString()}`));
-  const isExist = (list.findIndex(x => x.id == `${id}`))
-  const existQuantity = (list.find(x => x.quantity == `${quantity}`))
+  console.log(list);
+
+  const isExist = (list.items.findIndex(x => x.id == `${id}`))
+  const existQuantity = (list.items.find(x => x.quantity == `${quantity}`))
 
   if (isExist < 0) {
-    list.push(object)
+    list[0].push(object)
+    list[1].updated_by = Date.now()
   }
 
-  else if (isExist >= 0 && existQuantity != quantity) { 
-    list[isExist].quantity = quantity
+  else if (isExist >= 0 && existQuantity != quantity) {
+    (list.items)[isExist].quantity = quantity
+    list.updated_by = Date.now()
   }
+
 
   const container = await client.set(`user:${userId.toString()}`, JSON.stringify(list))
 

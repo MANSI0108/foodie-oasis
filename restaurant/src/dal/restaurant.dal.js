@@ -37,7 +37,7 @@ class restaurantDal {
 
         else if (search) {
 
-            sql = str + ` WHERE name LIKE '${search}%' LIMIT ${limit} OFFSET ${offset} `
+            sql = str + ` WHERE name LIKE '%${search}%' LIMIT ${limit} OFFSET ${offset} `
 
         }
         else {
