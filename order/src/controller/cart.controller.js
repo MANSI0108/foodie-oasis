@@ -24,21 +24,21 @@ const addtocart = async (req, res, next) => {
 
   const items = [object]
   const dishes = {items,  updated_by }
-  // console.log(dishes);
+
   if (await client.exists(`user:${userId.toString()}`) == 0) {
     const setItem = await client.set(`user:${userId.toString()}`, JSON.stringify(dishes))
   
   }
 
   const list = JSON.parse(await client.get(`user:${userId.toString()}`));
-  console.log(list);
+ 
 
   const isExist = (list.items.findIndex(x => x.id == `${id}`))
   const existQuantity = (list.items.find(x => x.quantity == `${quantity}`))
 
   if (isExist < 0) {
-    list[0].push(object)
-    list[1].updated_by = Date.now()
+    list.items.push(object)
+    list.updated_by = Date.now()
   }
 
   else if (isExist >= 0 && existQuantity != quantity) {
