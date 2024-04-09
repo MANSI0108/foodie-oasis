@@ -26,7 +26,7 @@ const Job = new CronJob(process.env.CART_SCHEDULER_CRONTIME, cartEmptyFunction, 
 
 module.exports = Job
 
-
+ 
  
 
 

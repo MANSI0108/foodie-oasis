@@ -14,7 +14,7 @@ const connection = client.connect();
 
 Job.start()  
 app.use(verifyToken)
-
+ 
 app.use("/foodApp", Routes )
  
 app.use(ErrorHandler)
