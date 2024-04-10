@@ -6,6 +6,7 @@ const addtocart = async (req, res, next) => {
 
   const id = req.params.id;
   const userId = req.user.id
+  
   const token = req.rawHeaders[1]
 
   //   internal api call using aixos
@@ -68,6 +69,9 @@ const deletecart = async (req, res, next) => {
   const emptycart = await client.del((`user:${userId.toString()}`));
   if (emptycart) {
     return res.json({ Message: "Your Cart is Empty Now" })
+  }
+  else{
+    return res.json({Message: "Cart is already Empty"})
   }
 
 }

@@ -1,0 +1,161 @@
+openapi: 3.1.0
+info:
+  title: FOOD ORDERING APP
+  description: Order & Cart Service based on the OpenAPI 3.0 specification .
+  version: 1.0.0
+  contact: 
+    email: mansizti18@gmail.com
+    url: "https://sample.dev"
+
+servers:
+  - url: http://localhost:3002/api/v1
+    description: localhost version restaurant-menu service url  
+
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  
+
+paths:
+  /cart/add/:{id}:
+     post:
+      tags:
+        - Cart
+      summary: Add Item Into Cart
+      security:
+        - bearerAuth: []  
+      consumes:
+        - application/json
+      produces:
+        - application/json  
+      requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  quantity:
+                     type: integer
+  
+      responses:
+        '200': #status code
+          description: Item added to cart
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  Massege:
+                    type: string
+                  container:
+                    type: string                  
+        400:
+          description: Bad request
+        500:
+          description: internal server error              
+        
+
+  /cart:
+    get: 
+      tags:
+        - Cart
+      summary: Get Cart Items
+      security:
+        - bearerAuth: [] 
+          
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: Array
+                    items: 
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        dish_name: 
+                          type: string
+                        price:
+                          type: string
+                        quantity:
+                          type: string  
+                  updated_by:
+                    type: string                 
+        400:
+          description: Bad request
+        500:
+          description: internal server error        
+     
+
+  /cart/delete:
+     delete:
+      tags:
+        - Cart
+      security:
+        - bearerAuth: []  
+      summary: Delete Cart Details by cart-owner
+      consumes:
+        - application/json
+      produces:
+        - application/json            
+      responses:
+        '200': #status code
+          description: Delete the cart details 
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  message:
+                    type: string               
+        400:
+          description: Bad request
+        500:
+          description: internal server error          
+
+  /order/placeOrder:
+    get:
+      tags:
+        - Order
+      summary: place-Order
+      security:
+        - bearerAuth: []  
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: Array
+                    items: 
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        dish_name: 
+                          type: string
+                        price:
+                          type: string
+                        quantity:
+                          type: string  
+                  total_amount:
+                    type: string                 
+        400:
+          description: Bad request
+        500:
+          description: internal server error   
+
+
+  
