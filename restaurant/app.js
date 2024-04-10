@@ -18,7 +18,7 @@ app.use(verifyToken)
 
 app.use('/foodApp', Routes)
 
-
+ 
 app.use(ErrorHandler)
 
-module.exports = app; 
+module.exports = app;   

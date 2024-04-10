@@ -4,7 +4,7 @@ const { getRequestHandler } = require("../../helper");
 const router = express.Router({ mergeParams: true })
 
 router
-    .route('/addtocart/:id')
+    .route('/add/:id')
     .post(getRequestHandler(addtocart));
 
 router

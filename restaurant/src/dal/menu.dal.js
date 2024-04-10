@@ -29,6 +29,7 @@ class menuDal {
             sql = str
         }
 
+     
         const values = [restaurant_id, category_id, sub_category_id]
         const result = await client.query(sql, values);
         return result
