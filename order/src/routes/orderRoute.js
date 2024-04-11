@@ -4,8 +4,8 @@ const { orderDetails } = require("../controller/order.controller");
 const router = express.Router({ mergeParams: true })
 
 router
-    .route('/placeOrder')
+    .route('/')
     .get(getRequestHandler(orderDetails));
 
 
-module.exports = router; 
+module.exports = router;  
