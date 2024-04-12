@@ -11,7 +11,7 @@ const orderDetails = async (req, res, next) => {
     const totalOrder = JSON.parse(await client.get(`user:${userid.toString()}`));
     let total_amount = 0;
     let item = [];
-    let dishes = totalOrder.items
+    let dishes = totalOrder.items 
     const l = dishes.length
     for (let i = 0; i < l; i++) {
         total_amount += (dishes[i].price * dishes[i].quantity)
@@ -22,10 +22,10 @@ const orderDetails = async (req, res, next) => {
     const items = Result.items
 
     //   internal api call using aixos for get Restaurant Id
-    const token = req.rawHeaders[1]
-    const itemId = item[0].id
+    const token = req.headers["authorization"]
+    const itemId = item[0].id 
     const restaurantid = await getRestaurant(itemId, token);
-
+ 
     // service call for store data in database with all items details
     const storeData = await orderData({ dbClient, items, userid, restaurantid, total_amount })
 

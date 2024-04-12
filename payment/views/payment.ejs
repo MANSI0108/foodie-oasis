@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Buy a book</title>
+	<title>Foodie Oasis</title>
 	<link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
 	<script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
 	<script type="text/javascript" src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -19,17 +19,17 @@
 				<div class="columns is-centered is-vcentered">
 
 					<div class="column is-6">
-						<p class="title is-size-1">Just a book</p>
-						<p class="subtitle is-size-4">You can now read this book just for ₹500</p>
+						<p class="title is-size-1">Order Your Food</p>
+						<p class="subtitle is-size-4">Place Order here</p>
 
-						<button class="button is-link is-light is-medium" id="rzp-button1">Get the book</button>
+						<button class="button is-link is-light is-medium" id="rzp-button1">Payment</button>
 					</div>
 
 					<div class="column is-5">
 						<figure class="image">
 
-							<img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1"
-								style="border-radius: 10px" alt="">
+							<img src="https://htmlburger.com/blog/wp-content/uploads/2023/03/Food-App-Design-Simple-Food-Delivery-App-Concept-by-Giorgi-1024x807.jpg"
+								style="border-radius: 50px; width: 500px; height: 500px;" alt="">
 
 						</figure>
 					</div>
@@ -39,8 +39,11 @@
 		</div>
 	</section>
 	<script>
-		axios.post('/payment/order').then((info) => {
-			console.log(info);
+		const headers = {
+			'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJDb3NpbmUwNyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcxMjkyMTYwMCwiZXhwIjoxNzEyOTIyMjAwfQ.Hnwb-i5PFnz_rSI17Z5l8ie8Iloi94mPn5lBxZ-z4SE'
+		}
+
+		axios.post('/payment/order', null, { headers }).then((info) => {
 			var options = {
 				"key": "rzp_test_HYlSTNs2VyD0ip", // Enter the Key ID generated from the Dashboard
 				"name": "Foodie Oasis", //your business name

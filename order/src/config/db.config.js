@@ -19,7 +19,7 @@ const pool = new Pool({
 })
 
 
-console.log("Database Connected");
+console.log("Order Database Connected");
 
 
 module.exports = pool

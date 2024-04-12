@@ -1,4 +1,4 @@
-const pool = require("../config/db.config");
+
 
 
 class restaurantDal {
