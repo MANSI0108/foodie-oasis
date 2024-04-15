@@ -12,7 +12,7 @@ const verifyToken = async (req, res, next) => {
         if (typeof bearerHeader !== "undefined") {
             const bearer = bearerHeader.split(" ");
             const token = bearer[1];
-
+           
             jwt.verify(token, secretKey, (err, result) => {
                 if (err) {
                     const err = new Error("Token is Invalid")

@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }))
 
 //SWagger For Documentation
 const file = fs.readFileSync('./swagger.yaml', 'utf8')
-const swaggerDocument = YAML.parse(file)
+const swaggerDocument = YAML.parse(file) 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 //redis server
@@ -24,7 +24,7 @@ Job.start()
 app.use(verifyToken)
 
 app.use("/foodApp", Routes)
-
+ 
 app.use(ErrorHandler)
 
-module.exports = app;      
+module.exports = app;       
