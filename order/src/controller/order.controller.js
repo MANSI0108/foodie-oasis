@@ -20,11 +20,9 @@ const orderDetails = async (req, res, next) => {
 
     const Result = { items: item }
     const items = Result.items
-   console.log(items);
+  
     //   internal api call using aixos for get Restaurant Id
-
-
-    const token = req.headers['authorization']
+    const token = req.headers["authorization"]
     const itemId = item[0].id
 
     const restaurantid = await getRestaurant(itemId, token);

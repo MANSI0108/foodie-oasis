@@ -19,29 +19,20 @@
 				<div class="columns is-centered is-vcentered">
 
 					<div class="column is-6">
-<<<<<<< HEAD
-						<p class="title is-size-1">Order Your Food</p>
-						<p class="subtitle is-size-4">Place Order here</p>
 
-						<button class="button is-link is-light is-medium" id="rzp-button1">Payment</button>
-=======
 						<p class="title is-size-1">Foodie Oasis</p>
 						<p class="subtitle is-size-4">Order Your Food</p>
 
 						<button class="button is-link is-light is-medium" id="rzp-button1">Place Order</button>
->>>>>>> 4f06e5a8ef2cc634f4fc5d363428b906e79934a2
+
 					</div>
 
 					<div class="column is-5">
 						<figure class="image">
 
-<<<<<<< HEAD
-							<img src="https://htmlburger.com/blog/wp-content/uploads/2023/03/Food-App-Design-Simple-Food-Delivery-App-Concept-by-Giorgi-1024x807.jpg"
-								style="border-radius: 50px; width: 500px; height: 500px;" alt="">
-=======
 							<img src="https://cdn.freelogovectors.net/wp-content/uploads/2022/10/foodcom-logo-freelogovectors.net_-180x65.png"
 								style="border-radius: 10px" alt="">
->>>>>>> 4f06e5a8ef2cc634f4fc5d363428b906e79934a2
+
 
 						</figure>
 					</div>
@@ -51,22 +42,17 @@
 		</div>
 	</section>
 	<script>
-<<<<<<< HEAD
+
 		const headers = {
-			'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJDb3NpbmUwNyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcxMjkyMTYwMCwiZXhwIjoxNzEyOTIyMjAwfQ.Hnwb-i5PFnz_rSI17Z5l8ie8Iloi94mPn5lBxZ-z4SE'
+			'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJDb3NpbmUwNyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcxMzE4MDY4OSwiZXhwIjoxNzEzMTgxMjg5fQ.Jfj2-pkw93tHTLpHepoGthqMn7xorpzcthngUNXXJQ4'
 		}
 
 		axios.post('/payment/order', null, { headers }).then((info) => {
-=======
 
-       const Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJDb3NpbmUwNyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcxMzE3NjgwNiwiZXhwIjoxNzEzMTc3NDA2fQ.SbeibJwZmTX1hIMLM9I_VG_Z4c2lT4GuxVuOkLevZlg`;
-		axios.post('/payment/order',{},{headers: {Authorization}}).then((info) => {
-			
->>>>>>> 4f06e5a8ef2cc634f4fc5d363428b906e79934a2
 			var options = {
 				"key": "rzp_test_HYlSTNs2VyD0ip", // Enter the Key ID generated from the Dashboard
 				"name": "Foodie Oasis", //your business name
-				"description": "Test Transaction", 
+				"description": "Test Transaction",
 				"image": "",
 				"order_id": info.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
 				"callback_url": "/payment/success",
@@ -82,6 +68,6 @@
 			}
 		})
 	</script>
-</body> 
+</body>
 
 </html>
