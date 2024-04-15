@@ -17,7 +17,7 @@ const getOrder = async ( token) => {
 const saveOrder = async({token, orderid, razorpay_payment_id})=>{
 
    try {
-    const response = await axios.get(`${process.env.INTERNAL_API_PAYMENTID}?orderid=${orderid}&razorpay_payment_id=${razorpay_payment_id}`,{
+    const response = await axios.patch(`${process.env.INTERNAL_API_PAYMENTID}`,{orderid,razorpay_payment_id},{
         headers: {
             'Authorization': token
         }

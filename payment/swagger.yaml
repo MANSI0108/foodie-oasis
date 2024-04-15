@@ -1,0 +1,102 @@
+openapi: 3.1.0
+info:
+  title: FOOD ORDERING APP
+  description: Payment Service based on the OpenAPI 3.0 specification .
+  version: 1.0.0
+  contact: 
+    email: mansizti18@gmail.com
+    url: "https://sample.dev"
+
+servers:
+  - url: http://localhost:3003/api/v1
+    description: localhost version restaurant-menu service url  
+
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /payment/order:
+     post:
+      tags:
+        - Payment
+      summary: Place Order and Start Payment and Store into DB
+      security: 
+        - bearerAuth: []  
+      consumes:
+        - application/json
+      produces: 
+        - application/json  
+
+      responses:
+        '200': #status code
+          description: IF Payment Start then return Object with Payment ID
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:  
+                  id:
+                    type: string
+                  entity:
+                    type: string   
+                  amount:
+                    type: decimal
+                  amoun_paid:
+                    type: decimal
+                  amount_due:
+                    type: decimal 
+                  currency:
+                    type: string
+                  receipt:
+                    type: string
+                  offer_id:
+                    type: null
+                  status:
+                    type: string                            
+        400:
+          description: Bad request
+        500:
+          description: internal server error              
+        
+
+  /success:
+    post: 
+      tags:
+        - Payment
+      summary: Payment Success Or Not
+      security:
+        - bearerAuth: [] 
+      requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  razorpay_order_id:
+                    type: string   
+                  razorpay_payment_id:
+                    type: string   
+                  razorpay_signature:
+                    type: string      
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string 
+        400:
+          description: Bad request
+        500:
+          description: internal server error        
+     
+
+  

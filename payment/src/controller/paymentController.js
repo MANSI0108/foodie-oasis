@@ -69,10 +69,11 @@ exports.paymentSuccess = async (req, res, next) => {
             if (updateData.rowCount) {
 
                 //internal api call Service
-                const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJDb3NpbmUwNyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcxMzE4MDY4OSwiZXhwIjoxNzEzMTgxMjg5fQ.Jfj2-pkw93tHTLpHepoGthqMn7xorpzcthngUNXXJQ4`;
+                const token = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJDb3NpbmUwNyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcxMzE4MjY5MywiZXhwIjoxNzEzMTgzMjkzfQ.11vxtnz58KTgcQjC6Swo8pHQs-pJC3DhSGWE-i0kWm8`;
 
                 const data1 = await getOrder(token)
                 const orderid = data1.orderID
+
                 const data = await saveOrder({ token, orderid, razorpay_payment_id })
                 if (data.status == 200) {
                     return res.status(200).send(' Payment successful');
@@ -106,5 +107,8 @@ exports.paymentSuccess = async (req, res, next) => {
 
 
 };
+
+
+
 
 

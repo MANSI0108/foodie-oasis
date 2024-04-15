@@ -9,6 +9,6 @@ router
 
 router
    .route('/update')
-   .get(getRequestHandler(addPaymentID))    
+   .patch(getRequestHandler(addPaymentID))    
 
 module.exports = router;  

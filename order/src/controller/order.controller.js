@@ -41,9 +41,8 @@ const orderDetails = async (req, res, next) => {
 const addPaymentID = async(req,res,next)=>{
 
     const client= req.client
-    const {orderid, razorpay_payment_id} = req.query;
+    const {orderid, razorpay_payment_id} = req.body;
     
-    console.log(req.query);
     const paymentID = await updateOrder({client,orderid,razorpay_payment_id})
     if(paymentID){
        res.status(200).send("Store the PaymentID")
