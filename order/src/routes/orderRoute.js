@@ -1,11 +1,14 @@
 const express = require("express");
 const { getRequestHandler } = require("../../helper");
-const { orderDetails } = require("../controller/order.controller");
+const { orderDetails, addPaymentID } = require("../controller/order.controller");
 const router = express.Router({ mergeParams: true })
 
 router
     .route('/')
     .get(getRequestHandler(orderDetails));
 
+router
+   .route('/update')
+   .get(getRequestHandler(addPaymentID))    
 
 module.exports = router;  

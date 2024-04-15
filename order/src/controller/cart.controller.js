@@ -7,8 +7,8 @@ const addtocart = async (req, res, next) => {
   const id = req.params.id;
   const userId = req.user.id
   
-  const token = req.headers["authorization"]
-  console.log(req.headers["authorization"]);
+
+  const token = req.headers['authorization']
   //   internal api call using aixos
   const item = await getItem(id, token);
   const { dish_name, price } = item

@@ -10,6 +10,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+<<<<<<< HEAD
 -- Name: status; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -28,6 +29,15 @@ CREATE TYPE public.type AS ENUM (
     'captured',
     'failed',
     'pending'
+=======
+-- Name: state; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.state AS ENUM (
+    'pending',
+    'failed',
+    'captured'
+>>>>>>> 4f06e5a8ef2cc634f4fc5d363428b906e79934a2
 );
 
 
@@ -43,10 +53,17 @@ CREATE TABLE public.payment (
     id integer NOT NULL,
     razorpay_payment_id character varying(255),
     razorpay_order_id character varying(255),
+<<<<<<< HEAD
     orderid integer,
     status public.type DEFAULT 'pending'::public.type,
     createdat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updatedat timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+=======
+    orderid integer NOT NULL,
+    status public.state DEFAULT 'pending'::public.state,
+    createdat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updatedat timestamp without time zone DEFAULT now() NOT NULL
+>>>>>>> 4f06e5a8ef2cc634f4fc5d363428b906e79934a2
 );
 
 
@@ -112,4 +129,8 @@ ALTER TABLE ONLY public.schema_migrations
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
+<<<<<<< HEAD
     ('20240412070901');
+=======
+    ('20240415042142');
+>>>>>>> 4f06e5a8ef2cc634f4fc5d363428b906e79934a2
