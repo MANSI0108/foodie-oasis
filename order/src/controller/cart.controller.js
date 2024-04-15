@@ -7,7 +7,7 @@ const addtocart = async (req, res, next) => {
   const id = req.params.id;
   const userId = req.user.id
   
-  const token = req.rawHeaders[1]
+  const token = req.headers['authorization']
 
   //   internal api call using aixos
   const item = await getItem(id, token);

@@ -5,6 +5,7 @@ create table orders (
     userId SERIAL NOT NULL,
     restaurantId SERIAL NOT NULL,
     total_amount integer NOT NULL,
+    razorpay_payment_id VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP   
  );

@@ -1,6 +1,3 @@
-const pool = require("../config/db.config");
-
-
 class restaurantDal {
     async createRestaurant({ client, name, email, profile, address, lat, long, created_by, updated_by }) {
         const sql = `INSERT INTO restaurant(name, email, profile, address, lat, long, created_by, updated_by) VALUES ($1, $2, $3, $4, $5, $6 , $7, $8) RETURNING *`

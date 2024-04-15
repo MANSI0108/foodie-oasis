@@ -15,6 +15,14 @@ class orderDal {
         return result
     }
   
+    async updateOrder({client, orderid, razorpay_payment_id}){
+        
+        const sql = `UPDATE orders SET  razorpay_payment_id = $1 WHERE id = $2;`
+        const values = [razorpay_payment_id, orderid]
+        const result = await client.query(sql, values);
+        return result
+
+    }
 }
 
 module.exports = new orderDal();

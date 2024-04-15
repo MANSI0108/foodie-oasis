@@ -19,16 +19,16 @@
 				<div class="columns is-centered is-vcentered">
 
 					<div class="column is-6">
-						<p class="title is-size-1">Just a book</p>
-						<p class="subtitle is-size-4">You can now read this book just for ₹500</p>
+						<p class="title is-size-1">Foodie Oasis</p>
+						<p class="subtitle is-size-4">Order Your Food</p>
 
-						<button class="button is-link is-light is-medium" id="rzp-button1">Get the book</button>
+						<button class="button is-link is-light is-medium" id="rzp-button1">Place Order</button>
 					</div>
 
 					<div class="column is-5">
 						<figure class="image">
 
-							<img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1"
+							<img src="https://cdn.freelogovectors.net/wp-content/uploads/2022/10/foodcom-logo-freelogovectors.net_-180x65.png"
 								style="border-radius: 10px" alt="">
 
 						</figure>
@@ -39,12 +39,14 @@
 		</div>
 	</section>
 	<script>
-		axios.post('/payment/order').then((info) => {
-			console.log(info);
+
+       const Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJDb3NpbmUwNyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcxMzE3NjgwNiwiZXhwIjoxNzEzMTc3NDA2fQ.SbeibJwZmTX1hIMLM9I_VG_Z4c2lT4GuxVuOkLevZlg`;
+		axios.post('/payment/order',{},{headers: {Authorization}}).then((info) => {
+			
 			var options = {
 				"key": "rzp_test_HYlSTNs2VyD0ip", // Enter the Key ID generated from the Dashboard
 				"name": "Foodie Oasis", //your business name
-				"description": "Test Transaction",
+				"description": "Test Transaction", 
 				"image": "",
 				"order_id": info.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
 				"callback_url": "/payment/success",
@@ -60,6 +62,6 @@
 			}
 		})
 	</script>
-</body>
+</body> 
 
 </html>

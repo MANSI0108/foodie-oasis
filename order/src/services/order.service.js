@@ -3,9 +3,10 @@ const orderDal = require("../dal/order.dal");
 // service call for store order details in database 
 
 const orderData = async ({ dbClient, items, userid, restaurantid, total_amount }) => {
-
+   let order
     if (items.length >= 1) {
-        const order = await orderDal.createOrder({ dbClient, userid, restaurantid, total_amount })
+         order = await orderDal.createOrder({ dbClient, userid, restaurantid, total_amount })
+    
         if (order.rowCount) {
 
             for (const item of items) {
@@ -21,7 +22,16 @@ const orderData = async ({ dbClient, items, userid, restaurantid, total_amount }
         }
     }
 
-    return true;
+    return order.rows[0].id;
 }
 
-module.exports = { orderData }
+
+const updateOrder = async({client,orderid,razorpay_payment_id}) =>{
+
+    let update = await orderDal.updateOrder({client,orderid,razorpay_payment_id})
+
+    return update.rowCount
+
+}
+
+module.exports = { orderData, updateOrder } 

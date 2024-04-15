@@ -95,6 +95,7 @@ CREATE TABLE public.orders (
     userid integer NOT NULL,
     restaurantid integer NOT NULL,
     total_amount integer NOT NULL,
+    razorpay_payment_id character varying(255),
     createdat timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updatedat timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
