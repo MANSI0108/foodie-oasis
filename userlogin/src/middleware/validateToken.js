@@ -1,5 +1,6 @@
 
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 const secretKey = process.env.JWT_SECRET;
 
 const verifyToken = async (req, res, next) => {
@@ -12,7 +13,6 @@ const verifyToken = async (req, res, next) => {
         if (typeof bearerHeader !== "undefined") {
             const bearer = bearerHeader.split(" ");
             const token = bearer[1];
-
             jwt.verify(token, secretKey, (err, result) => {
                 if (err) {
                     const err = new Error("Token is Invalid")
