@@ -40,12 +40,14 @@ const getMenuByID = async function (req, res, next) {
 
   const client = req.client
   const menu_id = req.params.id
+  console.log(menu_id);
 
   const result = await getItemByID({ client, menu_id })
   req.menu = result.rows
   res.json({ Item: result.rows })
 
 }
+
 const updateMenu = async (req, res, next) => {
   const client = req.client
   const { dish_name, description, price, restaurant_id, category_id, sub_category_id } = req.body
