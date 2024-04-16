@@ -7,7 +7,7 @@ const app = require("../../app.js")
 
 describe('Menu', () => {
 
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXNlcm5hbWUiOiJDb3NpbmUwOCIsInJvbGUiOiJvd25lciIsImlhdCI6MTcxMzI3Mjk4NywiZXhwIjoxNzEzMjczNTg3fQ.S9_8EgrMmlkk-iyOdy4IaBDn20lfMSDSGkvBKvM09Vo';
+    let token = '';
     //let's set up the data we need to pass to the login method
     const Menu = {
         restaurant_id: 5,
