@@ -18,7 +18,23 @@ const GETMENU = {
     page: 1
 }
 
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXNlcm5hbWUiOiJDb3NpbmUwOCIsInJvbGUiOiJvd25lciIsImlhdCI6MTcxMzUxNjk2OCwiZXhwIjoxNzEzNTE3NTY4fQ.5hvQVcHRtirfXoAsu1Ryck3HDCnpAbBRMEcRamotsqk"
+const GETRESTAURANT = {
+    sort: true,
+    sortBy: "id",
+    sortType: "asc",
+    search: "",
+    page: 1
+}
+
+const RESTAURANT = {
+    name:"Bunglow cafe1",
+    email:"bq13@gmail.com",
+    address:"Vesu",
+    lat:5,
+    long:8
+}
+
+const TOKEN = ""
 
 
-module.exports={MENU, GETMENU, TOKEN}
+module.exports = { MENU, GETMENU, TOKEN, GETRESTAURANT, RESTAURANT }

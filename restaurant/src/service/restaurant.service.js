@@ -56,13 +56,12 @@ const updateService = async ({ client, id, name, email, profile, address, lat, l
 const deleteService = async ({ client, id, ownerId }) => {
 
     const restaurant = await restaurantDal.findRestaurantById({ client, id });
-    const restaurant_id = restaurant.rows[0].id
 
-    if (restaurant_id) {
-
+    if (restaurant.rowCount) {
+const restaurant_id = restaurant.rows[0].id
         if (ownerId === restaurant.rows[0].created_by) {
             const isExist = await restaurantDal.menuExist({ client, restaurant_id })
-
+    
             if (isExist.rowCount) {
 
                 const ans = await restaurantDal.deleteRestaurantMenu({ client, restaurant_id })
@@ -70,6 +69,10 @@ const deleteService = async ({ client, id, ownerId }) => {
                     const dal_result = await restaurantDal.deleteRestaurant({ client, id });
                     return dal_result;
                 }
+            }
+            else{
+                const dal_result = await restaurantDal.deleteRestaurant({ client, id });
+                    return dal_result;
             }
         }
 

@@ -65,9 +65,8 @@ const deleteRestaurant = async (req, res, next) => {
   const id = req.params.id
   const ownerId = req.user.id
   const result = await deleteService({ client, id, ownerId });
-
   if (result.rowCount) {
-    return res.json("Deleted Successfully")
+    return res.json({message:"Deleted Successfully"})
   }
   else {
     const err = new Error("Somthing is Wrong");
