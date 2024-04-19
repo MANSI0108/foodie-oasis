@@ -5,7 +5,10 @@ const secretKey = process.env.JWT_SECRET;
 const verifyToken = async (req, res, next) => {
     const bearerHeader = await req.headers["authorization"];
     if (!bearerHeader) {
-        throw new Error("Access token is missing");
+
+        const err = new Error("Access token is missing")
+        return next(err)
+        
     }
 
     try {

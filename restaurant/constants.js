@@ -18,7 +18,7 @@ const GETMENU = {
     page: 1
 }
 
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXNlcm5hbWUiOiJDb3NpbmUwOCIsInJvbGUiOiJvd25lciIsImlhdCI6MTcxMzUwNTY5OCwiZXhwIjoxNzEzNTA2Mjk4fQ.I9tHrVaAN_nhJBhlR6S-icfnhaMuLMUEmX103mFuiw8'
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXNlcm5hbWUiOiJDb3NpbmUwOCIsInJvbGUiOiJvd25lciIsImlhdCI6MTcxMzUxNjk2OCwiZXhwIjoxNzEzNTE3NTY4fQ.5hvQVcHRtirfXoAsu1Ryck3HDCnpAbBRMEcRamotsqk"
 
 
 module.exports={MENU, GETMENU, TOKEN}
