@@ -77,7 +77,7 @@ const deleteMenu = async (req, res, next) => {
   const result = await deleteMenuService({ client, menu_id, ownerid });
 
   if (result.rowCount == 1) {
-    return res.json("Deleted Successfully")
+    return res.json({message:"Deleted Successfully"})
   }
   else {
     const err = new Error("You are not a owner");
