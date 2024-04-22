@@ -40,7 +40,7 @@ const getMenuByID = async function (req, res, next) {
 
   const client = req.client
   const menu_id = req.params.id
-  console.log(menu_id);
+
 
   const result = await getItemByID({ client, menu_id })
   req.menu = result.rows

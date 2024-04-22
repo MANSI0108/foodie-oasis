@@ -34,7 +34,7 @@ const RESTAURANT = {
     long:8
 }
 
-const TOKEN = ""
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwidXNlcm5hbWUiOiJDb3NpbmUwOCIsInJvbGUiOiJvd25lciIsImlhdCI6MTcxMzc1ODg2MSwiZXhwIjoxNzEzNzU5NDYxfQ.ugVHqaVFVFt7b9ljgBHDAtgEJFMxwD3AxAj8oKMU0yA"
 
 
 module.exports = { MENU, GETMENU, TOKEN, GETRESTAURANT, RESTAURANT }

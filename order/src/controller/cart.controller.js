@@ -15,6 +15,7 @@ const addtocart = async (req, res, next) => {
   const { dish_name, price } = item
   const updated_by = Date.now()
   const quantity = req.body.quantity
+ 
 
   const object = {
     id,
@@ -60,7 +61,13 @@ const addtocart = async (req, res, next) => {
 const getCart = async (req, res, next) => {
   const userId = req.user.id
   const list = JSON.parse(await client.get(`user:${userId.toString()}`));
-  res.json(list)
+  if(list){
+    res.status(201).json(list)
+  }
+  else{
+    res.status(200).json({Message:"Cart is already Empty"})
+  }
+
 
 }
 

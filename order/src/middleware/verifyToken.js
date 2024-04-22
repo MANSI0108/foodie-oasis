@@ -5,7 +5,9 @@ const secretKey = process.env.JWT_SECRET
 const verifyToken = async (req, res, next) => {
     const bearerHeader = await req.headers["authorization"];
     if (!bearerHeader) {
-        throw new Error("Access token is missing");
+        const err = new Error("Access token is missing")
+        next(err)
+      
     }
 
     try {
@@ -19,16 +21,14 @@ const verifyToken = async (req, res, next) => {
                     return next(err)
                 }
                 req.user = result
-                next();
+               return next();
             });
             if (!token) {
-                next(new Error("User is not authorized"));
+               return next(new Error("User is not authorized"));
             }
-        } else {
-            const err = new Error("Token Expired")
-            next(err)
 
-        }
+            return
+        } 
     } catch (err) {
         next(err)
 
