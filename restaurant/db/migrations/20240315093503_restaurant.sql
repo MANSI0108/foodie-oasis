@@ -28,7 +28,7 @@ insert into category(name) values ('Italian');
 insert into category(name) values ('Chinese');
 insert into category(name) values ('Desserts');
 insert into category(name) values ('Beverages');
-
+insert into category(name) values  ('Thali');
 
 create table sub_category(
   id SERIAL PRIMARY KEY,
@@ -50,7 +50,6 @@ insert into sub_category(name, category_id) values ('breakfast', 1);
 insert into sub_category(name, category_id) values ('veg_Special', 2);
 insert into sub_category(name, category_id) values ('Paneer_Special', 2);
 insert into sub_category(name, category_id) values ('Rice_Special', 2);
-insert into sub_category(name, category_id) values ('Fix_Thali', 2);
 insert into sub_category(name, category_id) values ('Dal', 2);
 insert into sub_category(name, category_id) values ('Chapati/roti', 2);
 insert into sub_category(name, category_id) values ('starter', 2);
@@ -119,7 +118,11 @@ insert into sub_category(name, category_id) values ('Cider', 8);
 insert into sub_category(name, category_id) values ('Coffee', 8);
 insert into sub_category(name, category_id) values ('Wine', 8);
 insert into sub_category(name, category_id) values ('Tea', 8);
+ 
 
+insert into sub_category(name, category_id) values ('Large Thali', 9);
+insert into sub_category(name, category_id) values ('Small Thali', 9);
+insert into sub_category(name, category_id) values ('Medium Thali', 9);
 
  create table restaurant_menu (
    id SERIAL PRIMARY KEY,
@@ -144,7 +147,9 @@ insert into sub_category(name, category_id) values ('Tea', 8);
  );
 
 -- migrate:down
-
-DROP TABLE IF EXISTS restaurant;
+DROP TABLE IF EXISTS restaurant_menu;
+DROP TABLE IF EXISTS sub_category;
 DROP TABLE IF EXISTS category;
-DROP TABLE IF EXISTS restaurant_menu
+DROP TABLE IF EXISTS restaurant;
+
+
