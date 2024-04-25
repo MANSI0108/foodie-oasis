@@ -17,7 +17,7 @@ const registerMenuService = async ({ client, category_id, restaurant_id, dish_na
 }
 
 const getMenuService = async ({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id, page }) => {
-    
+
     const dal_result = await menuDal.getMenu({ sort, sortBy, sortType, search, client, restaurant_id, category_id, sub_category_id, page });
     return dal_result;
 
@@ -71,4 +71,21 @@ const deleteMenuService = async ({ client, menu_id, ownerid }) => {
 
 }
 
-module.exports = { registerMenuService, getMenuService, updateMenuService, deleteMenuService, getItemByID };
+const getMenuBySubCategoryService = async ({ client, subCategoryID }) => {
+
+    const dal_result = await menuDal.menubySubcategory({ client, subCategoryID });
+
+
+    return dal_result;
+
+
+
+}
+
+const getCategoryList = async ({ client }) => {
+
+    const dal_result = await menuDal.getCategory(client);
+    return dal_result;
+}
+
+module.exports = { registerMenuService, getMenuService, updateMenuService, deleteMenuService, getItemByID, getMenuBySubCategoryService, getCategoryList };

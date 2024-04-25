@@ -1,5 +1,5 @@
 
-const { registerMenuService, getMenuService, updateMenuService, deleteMenuService, getItemByID } = require("../service/menu.service");
+const { registerMenuService, getMenuService, updateMenuService, deleteMenuService, getItemByID, getMenuBySubCategoryService, getCategoryList } = require("../service/menu.service");
 
 
 
@@ -41,7 +41,6 @@ const getMenuByID = async function (req, res, next) {
   const client = req.client
   const menu_id = req.params.id
 
-
   const result = await getItemByID({ client, menu_id })
   req.menu = result.rows
   res.json({ Item: result.rows })
@@ -77,7 +76,7 @@ const deleteMenu = async (req, res, next) => {
   const result = await deleteMenuService({ client, menu_id, ownerid });
 
   if (result.rowCount == 1) {
-    return res.json({message:"Deleted Successfully"})
+    return res.json({ message: "Deleted Successfully" })
   }
   else {
     const err = new Error("You are not a owner");
@@ -87,7 +86,33 @@ const deleteMenu = async (req, res, next) => {
 
 }
 
+const getMenuBySubCategoryID = async (req, res, next) => {
+  const client = req.client
+  const subCategoryID  = req.params.subCategoryID
+
+  const result = await getMenuBySubCategoryService({ client, subCategoryID });
+
+  if (result.rowCount != 0) {
+    return res.json(result.rows)
+  }
+  else {
+    const err = new Error("No Menu Found");
+    err.statusCode = 404;
+    next(err);
+  }
+}
 
 
-module.exports = { registerMenu, getMenu, getMenuByID, updateMenu, deleteMenu }
+const getCategory = async(req,res,next) => {
+  const client = req.client
+  console.log("ok");
+  const result = await getCategoryList({client});
+  return res.json(result.rows)
+
+}
+
+
+
+
+module.exports = { registerMenu, getMenu, getMenuByID, updateMenu, deleteMenu, getMenuBySubCategoryID, getCategory }
 

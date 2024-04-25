@@ -74,6 +74,19 @@ class menuDal {
         return result
     }
 
+    async menubySubcategory({ client, subCategoryID}) {
+        const sql = `SELECT * FROM restaurant_menu WHERE sub_category_id= $1;`
+        const values = [subCategoryID]
+        const result = await client.query(sql, values);
+        return result
+    }
+
+    async getCategory(client){
+
+        const sql = `SELECT * FROM category;`
+        const result = await client.query(sql);
+        return result
+    }
 
 }
 
