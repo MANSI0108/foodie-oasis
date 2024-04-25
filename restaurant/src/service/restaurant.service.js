@@ -54,41 +54,42 @@ const updateService = async ({ client, id, name, email, profile, address, lat, l
 }
 
 const deleteService = async ({ client, id, ownerId }) => {
+    try {
+        // Start a transaction
+        await client.query('BEGIN');
 
-    const restaurant = await restaurantDal.findRestaurantById({ client, id });
+        // Find the restaurant by ID
+        const restaurant = await restaurantDal.findRestaurantById({ client, id });
 
-    if (restaurant.rowCount) {
-const restaurant_id = restaurant.rows[0].id
-        if (ownerId === restaurant.rows[0].created_by) {
-            const isExist = await restaurantDal.menuExist({ client, restaurant_id })
-    
-            if (isExist.rowCount) {
+        if (restaurant.rowCount) {
+            const restaurant_id = restaurant.rows[0].id;
+            if (ownerId === restaurant.rows[0].created_by) {
+                // Check if menu exists for the restaurant
+                const isExist = await restaurantDal.menuExist({ client, restaurant_id });
 
-                const ans = await restaurantDal.deleteRestaurantMenu({ client, restaurant_id })
-                if (ans.rowCount) {
-                    const dal_result = await restaurantDal.deleteRestaurant({ client, id });
-                    return dal_result;
+                if (isExist.rowCount) {
+                    // Delete restaurant menu items
+                    await restaurantDal.deleteRestaurantMenu({ client, restaurant_id });
                 }
-            }
-            else{
+
+                // Delete the restaurant
                 const dal_result = await restaurantDal.deleteRestaurant({ client, id });
-                    return dal_result;
+
+                // Commit the transaction
+                await client.query('COMMIT');
+                return dal_result;
+            } else {
+                throw new Error("You are not the owner of this restaurant");
             }
+        } else {
+            throw new Error("Restaurant not found");
         }
-
-        else {
-            const err = new Error("You are not the owner of this restaurant")
-            err.statusCode = 401
-            throw err
-        }
+    } catch (error) {
+        // Roll back the transaction if there's an error
+        await client.query('ROLLBACK');
+        throw error;
     }
-    else {
-        const err = new Error("Restaurant not found");
-        err.statusCode = 404;
-        throw err
-    }
-
-}
+};
 
 const getRestaurantIDService = async ({ client, itemId }) => {
     const restaurant = await restaurantDal.findRestaurantByItemId({ client, itemId });
