@@ -18,8 +18,4 @@ const pool = new Pool({
 
 })
 
-
-console.log("User Database Connected");
-
-
 module.exports = pool

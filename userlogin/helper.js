@@ -3,6 +3,7 @@ const pool = require("./src/config/db.config");
 const getRequestHandler = (fn) => async (request, response, next) => {
 
   const client = await pool.connect()
+  console.log("user Database Connected");
   request.client = client
 
   try {

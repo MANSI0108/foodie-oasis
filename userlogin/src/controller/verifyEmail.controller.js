@@ -1,6 +1,6 @@
 const userDal = require("../dal/user.dal.js");
 const emailverifyTokenDal = require("../dal/emailtoken.dal.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { generateMailTransporter } = require("../utils/mail.js");
 const jwt = require("jsonwebtoken");
 

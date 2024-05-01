@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+
+  # PostgreSQL Database Service
+  db:
+    container_name: PostgreSQL
+    image: postgres
+    restart: always
+    environment:
+     DB_HOST : 'postgres'
+     DB_USER : 'postgres'
+     DB_DATABASE : 'userlogin'
+     DB_PORT: 5432
+     DB_PASSWORD : '123456'
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Node API Service
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgres://postgres:123456@db:5432/userlogin?sslmode=disable
+      JWT_SECRET: Cosine07
+      MAIL_TRAP_USER: "8bac3993eb004f"
+      MAIL_TRAP_PASS: "aa7faab1681122"
+    depends_on:
+      - db 
+    networks:
+      - app-network 
+
+networks: 
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:

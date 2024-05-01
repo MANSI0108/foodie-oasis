@@ -1,7 +1,7 @@
 const mailService = require("../services/mail.service.js");
 const { registerService } = require("../services/user.service.js");
 const { generateOTP, generateMailTransporter } = require("../utils/mail.js");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 
 const registerUser = async (req, res, next) => {
 

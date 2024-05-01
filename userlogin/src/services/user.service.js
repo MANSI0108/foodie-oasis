@@ -1,5 +1,5 @@
 const userDal = require("../dal/user.dal.js");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken");
 
 const registerService = async ({ client, username, password, email, phone, role }) => {
