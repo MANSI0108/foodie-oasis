@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+  # PostgreSQL Database Service
+  postgresql2:
+    container_name: postgresql2
+    image: postgres
+    restart: always
+    environment:
+     POSTGRES_USER : 'postgres'
+     POSTGRES_DB : 'restuarantdb'
+     POSTGRES_PASSWORD : '123456'
+    ports:
+      - "5000:5432"
+
+      # dbmate migration service
+
+  restaurant-migrate-1:
+    image: amacneil/dbmate:latest
+    environment:
+      - DATABASE_URL=postgres://postgres:123456@postgresql2:5432/restaurantdb?sslmode=disable
+    volumes:
+    - ./db/migrations:/db/migrations
+    command: ["up"]
+    depends_on:
+      - postgresql2  
+
+  # Backend API Service
+  api:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgres://postgres:123456@postgresql2:5432/restaurantdb?sslmode=disable
+      JWT_SECRET: Cosine07
+      MAIL_TRAP_USER: "8bac3993eb004f"
+      MAIL_TRAP_PASS: "aa7faab1681122"
+      DB_HOST: "postgresql2"
+      DB_USER: "postgres"
+      DB_DATABASE: "restuarantdb"
+      DB_PASSWORD: "123456"
+      DB_PORT: 5432
+    depends_on:
+      - postgresql2 
+      - restaurant-migrate-1
+
+networks: 
+  app-network:
+    driver: bridge
+
+
+
