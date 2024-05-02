@@ -4,25 +4,32 @@ services:
 
   # PostgreSQL Database Service
   db:
-    container_name: PostgreSQL
+    container_name: postgresql
     image: postgres
     restart: always
     environment:
-     DB_HOST : 'postgres'
-     DB_USER : 'postgres'
-     DB_DATABASE : 'userlogin'
-     DB_PORT: 5432
-     DB_PASSWORD : '123456'
+     POSTGRES_USER : 'postgres'
+     POSTGRES_DB : 'userlogin'
+     POSTGRES_PASSWORD : '123456'
     ports:
       - "5432:5432"
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    networks:
-      - app-network
 
-  # Node API Service
+      # dbmate migration service
+
+  migrate:
+    image: amacneil/dbmate:latest
+    environment:
+      - DATABASE_URL=postgres://postgres:123456@db:5432/userlogin?sslmode=disable
+    volumes:
+    - ./db/migrations:/db/migrations
+    command: ["up"]
+    depends_on:
+      - db   
+
+  # Backend API Service
   api:
     build: .
+    restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
@@ -31,14 +38,17 @@ services:
       JWT_SECRET: Cosine07
       MAIL_TRAP_USER: "8bac3993eb004f"
       MAIL_TRAP_PASS: "aa7faab1681122"
+      DB_HOST: "db"
+      DB_USER: "postgres"
+      DB_DATABASE: "userlogin"
+      DB_PASSWORD: "123456"
+      DB_PORT: 5432
     depends_on:
       - db 
-    networks:
-      - app-network 
+      - migrate
 
 networks: 
   app-network:
     driver: bridge
 
-volumes:
-  db-data:
+
