@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+
+  # PostgreSQL Database Service
+  db:
+    container_name: postgresql
+    image: postgres
+    restart: always
+    environment:
+     POSTGRES_USER : 'postgres'
+     POSTGRES_DB : 'userlogin'
+     POSTGRES_PASSWORD : '123456'
+    ports:
+      - "5432:5432"
+
+      # dbmate migration service
+
+  migrate:
+    image: amacneil/dbmate:latest
+    environment:
+      - DATABASE_URL=postgres://postgres:123456@db:5432/userlogin?sslmode=disable
+      - /db/migrations:/db/migrations
+    command: ["up"]
+    depends_on:
+      - db   
+
+
+  # Backend API Service
+  api:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      JWT_SECRET: Cosine07
+      MAIL_TRAP_USER: "8bac3993eb004f"
+      MAIL_TRAP_PASS: "aa7faab1681122"
+      DB_HOST: "db"
+      DB_USER: "postgres"
+      DB_DATABASE: "userlogin"
+      DB_PASSWORD: "123456"
+      DB_PORT: 5432
+    depends_on:
+      - db 
+      - migrate
+
+
+networks: 
+  app-network:
+    driver: bridge
