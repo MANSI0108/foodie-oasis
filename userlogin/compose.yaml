@@ -19,7 +19,8 @@ services:
     image: amacneil/dbmate:latest
     environment:
       - DATABASE_URL=postgres://postgres:123456@db:5432/userlogin?sslmode=disable
-      - /db/migrations:/db/migrations
+    volumes:
+      - ./db/migrations:/db/migrations
     command: ["up"]
     depends_on:
       - db   
