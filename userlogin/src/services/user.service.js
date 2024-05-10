@@ -29,7 +29,7 @@ const loginService = async ({ client, username, password, role }) => {
     if (rowCount === 0) {
         const err = new Error("User Not Found");
         err.statusCode = 404;
-      throw err;
+        throw err;
 
     }
     const user = rows[0];

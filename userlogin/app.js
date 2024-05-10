@@ -5,6 +5,7 @@ const ErrorHandler = require("./src/middleware/asyncHandler.js");
 const swaggerUi = require("swagger-ui-express")
 const YAML = require("yaml")
 const fs = require("fs-extra");
+const cookieParser = require("cookie-parser");
 app.use(express.json())
 
 //Swagger For Documentation
@@ -13,6 +14,7 @@ const swaggerDocument = YAML.parse(file)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 app.use('/foodApp', authRoute)
 app.use(ErrorHandler)
 
